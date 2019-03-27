@@ -4,6 +4,8 @@ public class IdentityDocument {
 	
 	private IdentityDocumentType identityDocumentType;
 	
+	private byte[] documentCopy;
+	
 	private boolean isVerified;
 
 	public IdentityDocumentType getIdentityDocumentType() {
@@ -12,6 +14,14 @@ public class IdentityDocument {
 
 	public void setIdentityDocumentType(IdentityDocumentType identityDocumentType) {
 		this.identityDocumentType = identityDocumentType;
+	}
+
+	public byte[] getDocumentCopy() {
+		return documentCopy;
+	}
+
+	public void setDocumentCopy(byte[] documentCopy) {
+		this.documentCopy = documentCopy;
 	}
 
 	public boolean isVerified() {
