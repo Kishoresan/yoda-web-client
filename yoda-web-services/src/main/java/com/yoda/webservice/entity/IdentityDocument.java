@@ -1,5 +1,7 @@
 package com.yoda.webservice.entity;
 
+import com.yoda.webservice.entity.lookup.IdentityDocumentType;
+
 public class IdentityDocument {
 	
 	private IdentityDocumentType identityDocumentType;

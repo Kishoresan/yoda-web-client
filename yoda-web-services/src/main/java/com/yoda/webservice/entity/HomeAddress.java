@@ -1,5 +1,7 @@
 package com.yoda.webservice.entity;
 
+import com.yoda.webservice.entity.lookup.Country;
+
 public class HomeAddress extends ContactInformation {
 	
 	private Short houseNumber;
@@ -7,7 +9,7 @@ public class HomeAddress extends ContactInformation {
 	private String zipCode;
 	private String city;
 	private String state;
-	private String country;
+	private Country country;
 	
 	public Short getHouseNumber() {
 		return houseNumber;
@@ -49,11 +51,11 @@ public class HomeAddress extends ContactInformation {
 		this.state = state;
 	}
 	
-	public String getCountry() {
+	public Country getCountry() {
 		return country;
 	}
 	
-	public void setCountry(String country) {
+	public void setCountry(Country country) {
 		this.country = country;
 	}
 }

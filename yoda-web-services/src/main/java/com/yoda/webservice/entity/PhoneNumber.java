@@ -1,19 +1,22 @@
 package com.yoda.webservice.entity;
 
+import com.yoda.webservice.entity.lookup.Country;
+import com.yoda.webservice.entity.lookup.PhoneType;
+
 public class PhoneNumber extends ContactInformation{
 	
-	private String countryCode;
+	private Country country;
 	private String number;
-	private boolean isVerified;
+	private PhoneType phoneType;
 	
-	public String getCountryCode() {
-		return countryCode;
+	public Country getCountry() {
+		return country;
 	}
-	
-	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
+
+	public void setCountry(Country country) {
+		this.country = country;
 	}
-	
+
 	public String getNumber() {
 		return number;
 	}
@@ -21,13 +24,13 @@ public class PhoneNumber extends ContactInformation{
 	public void setNumber(String number) {
 		this.number = number;
 	}
-	
-	public boolean isVerified() {
-		return isVerified;
+
+	public PhoneType getPhoneType() {
+		return phoneType;
 	}
 
-	public void setVerified(boolean isVerified) {
-		this.isVerified = isVerified;
+	public void setPhoneType(PhoneType phoneType) {
+		this.phoneType = phoneType;
 	}
-	
+		
 }
