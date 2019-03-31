@@ -49,11 +49,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>com.h2database</groupId>
-		    <artifactId>h2</artifactId>
-		    <scope>runtime</scope>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 
@@ -74,17 +74,17 @@
 					<includes>
 						<include>src/main/resources/application.properties</include>
 					</includes>
-					
-					<replacements>
-                    <replacement>
-                    	<token>@env@</token>
-                    	<value>${env}</value>
-                    </replacement>
-                    </replacements>
 
+					<replacements>
+						<replacement>
+							<token>@env@</token>
+							<value>${env}</value>
+						</replacement>
+					</replacements>
 				</configuration>
 
 			</plugin>
+			
 		</plugins>
 
 		<resources>
@@ -120,6 +120,39 @@
 			<properties>
 				<env>local</env>
 			</properties>
+		</profile>
+		
+		<!-- Build docker image using this profile, locally or productive. Needs docker installed. -->
+		
+		<profile>
+			<id>dockerImage</id>
+			
+			<build>
+	            <plugins>
+	            	<plugin>
+						<groupId>com.spotify</groupId>
+						<artifactId>dockerfile-maven-plugin</artifactId>
+						<version>1.4.10</version>
+						<executions>
+							<execution>
+								<id>default</id>
+								<goals>
+									<goal>build</goal>
+									<goal>tag</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<tag>${project.version}</tag>
+							<repository>yoda/${project.artifactId}</repository>
+							<buildArgs>
+								<JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+							</buildArgs>
+						</configuration>
+					</plugin>
+	            </plugins>
+			</build>
+			
 		</profile>
 
 	</profiles>
