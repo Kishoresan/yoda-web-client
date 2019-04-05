@@ -1,4 +1,4 @@
-package com.yoda.webservice.entity;
+package com.yoda.webservice.entity.profile;
 
 public class EmailAddress extends ContactInformation{
 	

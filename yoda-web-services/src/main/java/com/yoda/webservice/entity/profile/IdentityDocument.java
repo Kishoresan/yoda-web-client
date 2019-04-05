@@ -1,21 +1,21 @@
-package com.yoda.webservice.entity;
+package com.yoda.webservice.entity.profile;
 
-import com.yoda.webservice.entity.lookup.IdentityDocumentType;
+import com.yoda.webservice.entity.lookup.DocumentType;
 
 public class IdentityDocument {
 	
-	private IdentityDocumentType identityDocumentType;
+	private DocumentType documentType;
 	
 	private byte[] documentCopy;
 	
 	private boolean isVerified;
 
-	public IdentityDocumentType getIdentityDocumentType() {
-		return identityDocumentType;
+	public void setDocumentType(DocumentType documentType) {
+		this.documentType = documentType;
 	}
-
-	public void setIdentityDocumentType(IdentityDocumentType identityDocumentType) {
-		this.identityDocumentType = identityDocumentType;
+	
+	public DocumentType getDocumentType() {
+		return documentType;
 	}
 
 	public byte[] getDocumentCopy() {
