@@ -9,23 +9,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.yoda.webservice.entity.lookup.DocumentType;
-import com.yoda.webservice.repository.lookup.DocumentTypeRepository;
+import com.yoda.webservice.entity.lookup.Country;
+import com.yoda.webservice.repository.lookup.CountryRepository;
 
 @RestController
-@RequestMapping("/documentTypes")
-public class DocumentTypeController {
+@RequestMapping("/countries")
+public class CountryController {
 	
 	@Autowired
-	private DocumentTypeRepository documentTypeRepository;
-
+	private CountryRepository countryRepository;
+	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<DocumentType> find() {
-		return documentTypeRepository.findAll();
+	public List<Country> find() {
+		return countryRepository.findAll();
 	}
 	
 	@RequestMapping(path = "/{cd}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public DocumentType findById(@PathVariable("cd") Short code) {
-		return documentTypeRepository.findById(code).orElse(null);
+	public Country findById(@PathVariable("cd") Short code) {
+		return countryRepository.findById(code).orElse(null);
 	}
 }
