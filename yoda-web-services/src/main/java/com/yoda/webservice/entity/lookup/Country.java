@@ -1,5 +1,7 @@
 package com.yoda.webservice.entity.lookup;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,8 +9,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(schema = "LOOKUP", name = "T_COUNTRY")
-public class Country {
-	
+public class Country implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name = "CD")
 	private Short code;
@@ -72,5 +76,4 @@ public class Country {
 	public String toString() {
 		return "Country [code=" + code + ", name=" + name + ", phoneCode=" + phoneCode + "]";
 	}
-
 }
