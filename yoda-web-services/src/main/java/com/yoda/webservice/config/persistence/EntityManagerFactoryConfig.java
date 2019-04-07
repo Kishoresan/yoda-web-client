@@ -1,4 +1,4 @@
-package com.yoda.webservice;
+package com.yoda.webservice.config.persistence;
 
 import java.util.HashMap;
 

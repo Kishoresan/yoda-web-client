@@ -43,7 +43,7 @@ public class User implements Serializable{
 	@Column(name = "NATIONALITY", nullable = false)
 	private Short nationality;
 	
-	@Column(name = "CREATED")
+	@Column(name = "CREATED", insertable = false, updatable = false)
 	private Timestamp signedUpOn;
 	
 	@Override
