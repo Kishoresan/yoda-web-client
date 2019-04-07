@@ -1,37 +1,108 @@
 package com.yoda.webservice.entity.profile;
 
-import com.yoda.webservice.entity.lookup.DocumentType;
+import java.io.Serializable;
+import java.util.UUID;
 
-public class IdentityDocument {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+
+@Entity
+@Table(schema = "PROFILE", name = "T_IDENTITY_DOCUMENT")
+public class IdentityDocument implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(generator = "uuid2")
+	@GenericGenerator(name = "uuid2", strategy = "uuid2")
+	@Column(name = "ID", columnDefinition = "BINARY(16)")
+	private UUID id;
 	
-	private DocumentType documentType;
+	@Column(name = "FK_DOCUMENT_TYPE_CD", nullable = false, updatable = false)
+	private Short documentTypeCode;
 	
-	private byte[] documentCopy;
+	@Column(name = "FK_USER_ID", columnDefinition = "BINARY(16)", nullable = false, updatable = false)
+	private UUID userId;
 	
+	@Column(name = "IS_VERIFIED", columnDefinition = "BIT")
 	private boolean isVerified;
 
-	public void setDocumentType(DocumentType documentType) {
-		this.documentType = documentType;
-	}
-	
-	public DocumentType getDocumentType() {
-		return documentType;
-	}
-
-	public byte[] getDocumentCopy() {
-		return documentCopy;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
 	}
 
-	public void setDocumentCopy(byte[] documentCopy) {
-		this.documentCopy = documentCopy;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		IdentityDocument other = (IdentityDocument) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 
-	public boolean isVerified() {
+	public UUID getId() {
+		return id;
+	}
+
+	public void setId(UUID id) {
+		this.id = id;
+	}
+
+	public Short getDocumentTypeCode() {
+		return documentTypeCode;
+	}
+
+	public void setDocumentTypeCode(Short documentTypeCode) {
+		this.documentTypeCode = documentTypeCode;
+	}
+
+	public UUID getUserId() {
+		return userId;
+	}
+
+	public void setUserId(UUID userId) {
+		this.userId = userId;
+	}
+
+	/**
+	 * IMPORTANT:
+	 * Jackson needs get in the beginning of method name. If this object is manipulated to/from JSON, make sure you 
+	 * keep it in mind. 
+	 */
+	public boolean getIsVerified() {
 		return isVerified;
 	}
 
-	public void setVerified(boolean isVerified) {
+	/**
+	 * IMPORTANT:
+	 * Jackson needs set in the beginning of method name. If this object is manipulated to/from JSON, make sure you 
+	 * keep it in mind. 
+	 */
+	public void setIsVerified(boolean isVerified) {
 		this.isVerified = isVerified;
+	}
+
+	@Override
+	public String toString() {
+		return "IdentityDocument [id=" + id + ", documentTypeCode=" + documentTypeCode + ", userId=" + userId
+				+ ", isVerified=" + isVerified + "]";
 	}
 	
 }
