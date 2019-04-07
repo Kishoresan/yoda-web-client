@@ -27,7 +27,7 @@ public class CountryController {
 		return new ResponseEntity<List<Country>>(countryRepository.findAll(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(path = "/{cd}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = "/id/{cd}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Country> findById(@PathVariable("cd") Short code) {
 		
 		Optional<Country> foundCountry = countryRepository.findById(code);

@@ -27,7 +27,7 @@ public class DocumentTypeController {
 		return new ResponseEntity<List<DocumentType>>(documentTypeRepository.findAll(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(path = "/{cd}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = "/id/{cd}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<DocumentType> findById(@PathVariable("cd") Short code) {
 		
 		Optional<DocumentType> foundType = documentTypeRepository.findById(code);

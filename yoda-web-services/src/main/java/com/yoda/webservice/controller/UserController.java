@@ -23,10 +23,22 @@ public class UserController {
 	@Autowired
 	private UserRepository userRepository;
 
-	@RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = "/id/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> findById(@PathVariable("id") UUID id) {
 		
 		Optional<User> foundUser = userRepository.findById(id);
+		
+		if(foundUser.isPresent()) {
+			return new ResponseEntity<User>(foundUser.get(), HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+	}
+	
+	@RequestMapping(path = "/email/{email}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<User> findByEmail(@PathVariable("email") String email) {
+		
+		Optional<User> foundUser = userRepository.findByEmail(email);
 		
 		if(foundUser.isPresent()) {
 			return new ResponseEntity<User>(foundUser.get(), HttpStatus.OK);
@@ -49,7 +61,7 @@ public class UserController {
 		userRepository.saveAndFlush(user);
 	}
 	
-	@RequestMapping(path = "/{id}", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = "/id/{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable("id") UUID id) {
 		userRepository.deleteById(id);
 	}
