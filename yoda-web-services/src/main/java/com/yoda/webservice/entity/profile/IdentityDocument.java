@@ -29,8 +29,17 @@ public class IdentityDocument implements Serializable{
 	@Column(name = "FK_USER_ID", columnDefinition = "BINARY(16)", nullable = false, updatable = false)
 	private UUID userId;
 	
+	@Column(name = "FK_MEDIA_FILE_ID", columnDefinition = "BINARY(16)", nullable = false, updatable = false)
+	private UUID mediaFileId;
+	
 	@Column(name = "IS_VERIFIED", columnDefinition = "BIT")
 	private boolean isVerified;
+	
+	public static IdentityDocument unverified() {
+		IdentityDocument identityDocument = new IdentityDocument();
+		identityDocument.setIsVerified(false);
+		return identityDocument;
+	}
 
 	@Override
 	public int hashCode() {
@@ -80,6 +89,14 @@ public class IdentityDocument implements Serializable{
 	public void setUserId(UUID userId) {
 		this.userId = userId;
 	}
+	
+	public UUID getMediaFileId() {
+		return mediaFileId;
+	}
+	
+	public void setMediaFileId(UUID mediaFileId) {
+		this.mediaFileId = mediaFileId;
+	}
 
 	/**
 	 * IMPORTANT:
@@ -102,7 +119,7 @@ public class IdentityDocument implements Serializable{
 	@Override
 	public String toString() {
 		return "IdentityDocument [id=" + id + ", documentTypeCode=" + documentTypeCode + ", userId=" + userId
-				+ ", isVerified=" + isVerified + "]";
+				+ ", mediaFileId=" + mediaFileId + ", isVerified=" + isVerified + "]";
 	}
 	
 }
