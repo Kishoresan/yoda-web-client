@@ -34,12 +34,6 @@ public class IdentityDocument implements Serializable{
 	
 	@Column(name = "IS_VERIFIED", columnDefinition = "BIT")
 	private boolean isVerified;
-	
-	public static IdentityDocument unverified() {
-		IdentityDocument identityDocument = new IdentityDocument();
-		identityDocument.setIsVerified(false);
-		return identityDocument;
-	}
 
 	@Override
 	public int hashCode() {
@@ -98,21 +92,11 @@ public class IdentityDocument implements Serializable{
 		this.mediaFileId = mediaFileId;
 	}
 
-	/**
-	 * IMPORTANT:
-	 * Jackson needs get in the beginning of method name. If this object is manipulated to/from JSON, make sure you 
-	 * keep it in mind. 
-	 */
-	public boolean getIsVerified() {
+	public boolean isVerified() {
 		return isVerified;
 	}
 
-	/**
-	 * IMPORTANT:
-	 * Jackson needs set in the beginning of method name. If this object is manipulated to/from JSON, make sure you 
-	 * keep it in mind. 
-	 */
-	public void setIsVerified(boolean isVerified) {
+	public void setVerified(boolean isVerified) {
 		this.isVerified = isVerified;
 	}
 
