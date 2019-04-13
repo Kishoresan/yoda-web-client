@@ -1,12 +1,11 @@
 package com.yoda.webservice.dto.profile;
 
-import java.io.Serializable;
 import java.util.UUID;
 
 import com.yoda.webservice.dto.DTO;
 import com.yoda.webservice.entity.profile.IdentityDocument;
 
-public class IdentityDocumentDTO implements DTO<IdentityDocument>, Serializable {
+public class IdentityDocumentDTO implements DTO<IdentityDocument> {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -15,6 +14,12 @@ public class IdentityDocumentDTO implements DTO<IdentityDocument>, Serializable 
 	private UUID userId;
 	private UUID mediaFileId;
 	private boolean isVerified;
+	
+	public static IdentityDocumentDTO of(IdentityDocument entity) {
+		IdentityDocumentDTO dto = new IdentityDocumentDTO();
+		dto.synchronizeWithEntity(entity);
+		return dto;
+	}
 	
 	public static IdentityDocumentDTO unverified() {
 		IdentityDocumentDTO dto = new IdentityDocumentDTO();

@@ -1,5 +1,6 @@
 package com.yoda.webservice.controller;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,30 @@ public class IdentityDocumentController {
 
 	@Autowired
 	private IdentityDocumentService identityDocumentService;
+	
+	@RequestMapping(path = "/id/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<IdentityDocumentDTO> findById(@PathVariable("id") UUID id) {
+		
+		Optional<IdentityDocumentDTO> identityDocumentDTO = identityDocumentService.findById(id);
+		
+		if(identityDocumentDTO.isPresent()) {
+			return new ResponseEntity<IdentityDocumentDTO>(identityDocumentDTO.get(), HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<IdentityDocumentDTO>(HttpStatus.NOT_FOUND);
+	}
+	
+	@RequestMapping(path = "/userId/{userId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<IdentityDocumentDTO> findByEmail(@PathVariable("userId") UUID userId) {
+		
+		Optional<IdentityDocumentDTO> identityDocumentDTO = identityDocumentService.findByUserId(userId);
+		
+		if(identityDocumentDTO.isPresent()) {
+			return new ResponseEntity<IdentityDocumentDTO>(identityDocumentDTO.get(), HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<IdentityDocumentDTO>(HttpStatus.NOT_FOUND);
+	}
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
@@ -41,7 +66,6 @@ public class IdentityDocumentController {
 		try {
 			identityDocumentDTO = identityDocumentService.save(identityDocumentDTO, documentName, document);
 			return new ResponseEntity<IdentityDocumentDTO>(identityDocumentDTO, HttpStatus.CREATED);
-
 		} catch (Exception e) {
 			// TODO: add logging
 		}
@@ -51,7 +75,6 @@ public class IdentityDocumentController {
 	
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void update(@RequestBody(required = true) IdentityDocumentDTO identityDocument) {
-		
 		identityDocumentService.update(identityDocument);
 	}
 

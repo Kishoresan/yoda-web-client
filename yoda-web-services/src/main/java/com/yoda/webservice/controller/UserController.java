@@ -13,56 +13,56 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.yoda.webservice.entity.profile.User;
-import com.yoda.webservice.repository.profile.UserRepository;
+import com.yoda.webservice.dto.profile.UserDTO;
+import com.yoda.webservice.service.profile.UserService;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
 	@Autowired
-	private UserRepository userRepository;
+	private UserService userService;
 
 	@RequestMapping(path = "/id/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<User> findById(@PathVariable("id") UUID id) {
+	public ResponseEntity<UserDTO> findById(@PathVariable("id") UUID id) {
 		
-		Optional<User> foundUser = userRepository.findById(id);
+		Optional<UserDTO> foundUser = userService.findById(id);
 		
 		if(foundUser.isPresent()) {
-			return new ResponseEntity<User>(foundUser.get(), HttpStatus.OK);
+			return new ResponseEntity<UserDTO>(foundUser.get(), HttpStatus.OK);
 		}
 		
-		return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
 	}
 	
 	@RequestMapping(path = "/email/{email}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<User> findByEmail(@PathVariable("email") String email) {
+	public ResponseEntity<UserDTO> findByEmail(@PathVariable("email") String email) {
 		
-		Optional<User> foundUser = userRepository.findByEmail(email);
+		Optional<UserDTO> foundUser = userService.findByEmail(email);
 		
 		if(foundUser.isPresent()) {
-			return new ResponseEntity<User>(foundUser.get(), HttpStatus.OK);
+			return new ResponseEntity<UserDTO>(foundUser.get(), HttpStatus.OK);
 		}
 		
-		return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<User> save(@RequestBody(required = true) User user) {
+	public ResponseEntity<UserDTO> save(@RequestBody(required = true) UserDTO user) {
 		
-		User createdUser = userRepository.saveAndFlush(user);
+		UserDTO createdUser = userService.save(user);
 		
-		return new ResponseEntity<User>(createdUser, HttpStatus.CREATED);
+		return new ResponseEntity<UserDTO>(createdUser, HttpStatus.CREATED);
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void update(@RequestBody(required = true) User user) {
-		userRepository.saveAndFlush(user);
+	public void update(@RequestBody(required = true) UserDTO user) {
+		userService.update(user);
 	}
 	
 	@RequestMapping(path = "/id/{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable("id") UUID id) {
-		userRepository.deleteById(id);
+		userService.delete(id);
 	}
 }

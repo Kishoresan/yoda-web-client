@@ -26,6 +26,32 @@ public class IdentityDocumentServiceImpl implements IdentityDocumentService {
 	private MediaFileRepository mediaFileRepository;
 
 	@Override
+	public Optional<IdentityDocumentDTO> findById(UUID id) {
+
+		Optional<IdentityDocument> foundEntity = identityDocumentRepository.findById(id);
+
+		if (foundEntity.isPresent()) {
+
+			return Optional.<IdentityDocumentDTO>of(IdentityDocumentDTO.of(foundEntity.get()));
+		}
+
+		return Optional.<IdentityDocumentDTO>empty();
+	}
+
+	@Override
+	public Optional<IdentityDocumentDTO> findByUserId(UUID userId) {
+		
+		Optional<IdentityDocument> foundEntity = identityDocumentRepository.findByUserId(userId);
+
+		if (foundEntity.isPresent()) {
+
+			return Optional.<IdentityDocumentDTO>of(IdentityDocumentDTO.of(foundEntity.get()));
+		}
+
+		return Optional.<IdentityDocumentDTO>empty();
+	}
+
+	@Override
 	public IdentityDocumentDTO save(IdentityDocumentDTO identityDocument, String documentName, MultipartFile document)
 			throws IOException {
 
