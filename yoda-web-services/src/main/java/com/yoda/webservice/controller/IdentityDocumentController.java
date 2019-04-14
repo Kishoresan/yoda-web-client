@@ -39,7 +39,7 @@ public class IdentityDocumentController {
 	}
 	
 	@RequestMapping(path = "/userId/{userId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<IdentityDocumentDTO> findByEmail(@PathVariable("userId") UUID userId) {
+	public ResponseEntity<IdentityDocumentDTO> findByUser(@PathVariable("userId") UUID userId) {
 		
 		Optional<IdentityDocumentDTO> identityDocumentDTO = identityDocumentService.findByUserId(userId);
 		
