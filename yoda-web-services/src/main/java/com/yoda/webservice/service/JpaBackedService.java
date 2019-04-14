@@ -5,10 +5,10 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 
-import com.yoda.webservice.dto.DTO;
+import com.yoda.webservice.dto.Dto;
 
 @Component
-public interface JPABackedService <T extends DTO<E>, E> {
+public interface JpaBackedService <T extends Dto<E>, E> {
 
 	public Optional<T> findById(UUID id);
 	

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.yoda.webservice.dto.profile.UserDTO;
+import com.yoda.webservice.dto.profile.UserDto;
 import com.yoda.webservice.service.profile.UserService;
 
 @RestController
@@ -24,40 +24,40 @@ public class UserController {
 	private UserService userService;
 
 	@RequestMapping(path = "/id/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserDTO> findById(@PathVariable("id") UUID id) {
+	public ResponseEntity<UserDto> findById(@PathVariable("id") UUID id) {
 		
-		Optional<UserDTO> foundUser = userService.findById(id);
+		Optional<UserDto> foundUser = userService.findById(id);
 		
 		if(foundUser.isPresent()) {
-			return new ResponseEntity<UserDTO>(foundUser.get(), HttpStatus.OK);
+			return new ResponseEntity<UserDto>(foundUser.get(), HttpStatus.OK);
 		}
 		
-		return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<UserDto>(HttpStatus.NOT_FOUND);
 	}
 	
 	@RequestMapping(path = "/email/{email}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserDTO> findByEmail(@PathVariable("email") String email) {
+	public ResponseEntity<UserDto> findByEmail(@PathVariable("email") String email) {
 		
-		Optional<UserDTO> foundUser = userService.findByEmail(email);
+		Optional<UserDto> foundUser = userService.findByEmail(email);
 		
 		if(foundUser.isPresent()) {
-			return new ResponseEntity<UserDTO>(foundUser.get(), HttpStatus.OK);
+			return new ResponseEntity<UserDto>(foundUser.get(), HttpStatus.OK);
 		}
 		
-		return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<UserDto>(HttpStatus.NOT_FOUND);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserDTO> save(@RequestBody(required = true) UserDTO user) {
+	public ResponseEntity<UserDto> save(@RequestBody(required = true) UserDto user) {
 		
-		UserDTO createdUser = userService.save(user);
+		UserDto createdUser = userService.save(user);
 		
-		return new ResponseEntity<UserDTO>(createdUser, HttpStatus.CREATED);
+		return new ResponseEntity<UserDto>(createdUser, HttpStatus.CREATED);
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void update(@RequestBody(required = true) UserDTO user) {
+	public void update(@RequestBody(required = true) UserDto user) {
 		userService.update(user);
 	}
 	

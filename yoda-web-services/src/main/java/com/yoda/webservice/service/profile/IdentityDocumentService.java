@@ -7,19 +7,19 @@ import java.util.UUID;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.yoda.webservice.dto.profile.IdentityDocumentDTO;
+import com.yoda.webservice.dto.profile.IdentityDocumentDto;
 
 @Component
 public interface IdentityDocumentService {
 	
-	public Optional<IdentityDocumentDTO> findById(UUID id);
+	public Optional<IdentityDocumentDto> findById(UUID id);
 	
-	public Optional<IdentityDocumentDTO> findByUserId(UUID userId);
+	public Optional<IdentityDocumentDto> findByUserId(UUID userId);
 
-	public IdentityDocumentDTO save(IdentityDocumentDTO identityDocument, String documentName, MultipartFile document)
+	public IdentityDocumentDto save(IdentityDocumentDto identityDocument, String documentName, MultipartFile document)
 			throws IOException;
 	
-	public IdentityDocumentDTO update(IdentityDocumentDTO identityDocument);
+	public IdentityDocumentDto update(IdentityDocumentDto identityDocument);
 
 	public void delete(UUID identityDocumentId);
 

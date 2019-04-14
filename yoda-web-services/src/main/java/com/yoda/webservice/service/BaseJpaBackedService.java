@@ -5,15 +5,17 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.yoda.webservice.dto.DTO;
+import com.yoda.webservice.dto.Dto;
 
-public abstract class BaseJPABackedService<D extends DTO<E>, E> implements JPABackedService<D, E> {
+public abstract class BaseJpaBackedService<D extends Dto<E>, E> implements JpaBackedService<D, E> {
 	
 	@Override
 	public Optional<D> findById(UUID id) {
+		return extractDtoFromOptional(getJpaRepository().findById(id));		
+	}
+	
+	protected Optional<D> extractDtoFromOptional(Optional<E> foundEntity ) {
 		
-		Optional<E> foundEntity = getJpaRepository().findById(id);
-
 		if (foundEntity.isPresent()) {
 
 			return Optional.<D> of(buildDto(foundEntity.get()));

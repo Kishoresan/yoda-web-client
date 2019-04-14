@@ -2,10 +2,10 @@ package com.yoda.webservice.dto.profile;
 
 import java.util.UUID;
 
-import com.yoda.webservice.dto.DTO;
+import com.yoda.webservice.dto.Dto;
 import com.yoda.webservice.entity.profile.MediaFile;
 
-public class MediaFileDTO implements DTO<MediaFile> {
+public class MediaFileDto implements Dto<MediaFile> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -14,8 +14,8 @@ public class MediaFileDTO implements DTO<MediaFile> {
 	private String fileType;
 	private byte[] fileData;
 	
-	public static MediaFileDTO of(MediaFile entity) {
-		MediaFileDTO dto = new MediaFileDTO();
+	public static MediaFileDto of(MediaFile entity) {
+		MediaFileDto dto = new MediaFileDto();
 		dto.synchronizeWithEntity(entity);
 		return dto;
 	}

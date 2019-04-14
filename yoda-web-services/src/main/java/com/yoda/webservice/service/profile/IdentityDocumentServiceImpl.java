@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.yoda.webservice.dto.profile.IdentityDocumentDTO;
+import com.yoda.webservice.dto.profile.IdentityDocumentDto;
 import com.yoda.webservice.entity.profile.IdentityDocument;
 import com.yoda.webservice.entity.profile.MediaFile;
 import com.yoda.webservice.repository.profile.IdentityDocumentRepository;
@@ -26,33 +26,33 @@ public class IdentityDocumentServiceImpl implements IdentityDocumentService {
 	private MediaFileRepository mediaFileRepository;
 
 	@Override
-	public Optional<IdentityDocumentDTO> findById(UUID id) {
+	public Optional<IdentityDocumentDto> findById(UUID id) {
 
 		Optional<IdentityDocument> foundEntity = identityDocumentRepository.findById(id);
 
 		if (foundEntity.isPresent()) {
 
-			return Optional.<IdentityDocumentDTO>of(IdentityDocumentDTO.of(foundEntity.get()));
+			return Optional.<IdentityDocumentDto>of(IdentityDocumentDto.of(foundEntity.get()));
 		}
 
-		return Optional.<IdentityDocumentDTO>empty();
+		return Optional.<IdentityDocumentDto>empty();
 	}
 
 	@Override
-	public Optional<IdentityDocumentDTO> findByUserId(UUID userId) {
+	public Optional<IdentityDocumentDto> findByUserId(UUID userId) {
 		
 		Optional<IdentityDocument> foundEntity = identityDocumentRepository.findByUserId(userId);
 
 		if (foundEntity.isPresent()) {
 
-			return Optional.<IdentityDocumentDTO>of(IdentityDocumentDTO.of(foundEntity.get()));
+			return Optional.<IdentityDocumentDto>of(IdentityDocumentDto.of(foundEntity.get()));
 		}
 
-		return Optional.<IdentityDocumentDTO>empty();
+		return Optional.<IdentityDocumentDto>empty();
 	}
 
 	@Override
-	public IdentityDocumentDTO save(IdentityDocumentDTO identityDocument, String documentName, MultipartFile document)
+	public IdentityDocumentDto save(IdentityDocumentDto identityDocument, String documentName, MultipartFile document)
 			throws IOException {
 
 		byte[] fileData = document.getBytes();
@@ -74,7 +74,7 @@ public class IdentityDocumentServiceImpl implements IdentityDocumentService {
 	}
 
 	@Override
-	public IdentityDocumentDTO update(IdentityDocumentDTO identityDocument) {
+	public IdentityDocumentDto update(IdentityDocumentDto identityDocument) {
 
 		IdentityDocument updatedEntity = identityDocumentRepository.save(identityDocument.createJPAEntity());
 

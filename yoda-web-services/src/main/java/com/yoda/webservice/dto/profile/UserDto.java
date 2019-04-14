@@ -4,10 +4,10 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-import com.yoda.webservice.dto.DTO;
+import com.yoda.webservice.dto.Dto;
 import com.yoda.webservice.entity.profile.User;
 
-public class UserDTO implements DTO<User> {
+public class UserDto implements Dto<User> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -20,8 +20,8 @@ public class UserDTO implements DTO<User> {
 	private Short nationality;
 	private Timestamp signedUpOn;
 	
-	public static UserDTO of(User entity) {
-		UserDTO user = new UserDTO();
+	public static UserDto of(User entity) {
+		UserDto user = new UserDto();
 		user.synchronizeWithEntity(entity);
 		return user;
 	}

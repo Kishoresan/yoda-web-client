@@ -1,22 +1,15 @@
 package com.yoda.webservice.service.profile;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 
-import com.yoda.webservice.dto.profile.UserDTO;
+import com.yoda.webservice.dto.profile.UserDto;
+import com.yoda.webservice.entity.profile.User;
+import com.yoda.webservice.service.JpaBackedService;
 
 @Component
-public interface UserService {
+public interface UserService extends JpaBackedService<UserDto, User>{
 	
-	public Optional<UserDTO> findById(UUID id);
-	
-	public Optional<UserDTO> findByEmail(String email);
-	
-	public UserDTO save(UserDTO user);
-
-	public UserDTO update(UserDTO user);
-	
-	public void delete(UUID id);
+	public Optional<UserDto> findByEmail(String email);
 }

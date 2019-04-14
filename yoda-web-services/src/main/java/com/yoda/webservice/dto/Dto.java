@@ -2,7 +2,7 @@ package com.yoda.webservice.dto;
 
 import java.io.Serializable;
 
-public interface DTO<E> extends Serializable{
+public interface Dto<E> extends Serializable{
 
 	public E createJPAEntity();
 	

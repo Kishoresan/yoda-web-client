@@ -4,62 +4,34 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.yoda.webservice.dto.profile.UserDTO;
+import com.yoda.webservice.dto.profile.UserDto;
 import com.yoda.webservice.entity.profile.User;
 import com.yoda.webservice.repository.profile.UserRepository;
+import com.yoda.webservice.service.BaseJpaBackedService;
 
 @Service("userService")
 @Transactional(transactionManager = "profileTransactionManager")
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends BaseJpaBackedService<UserDto, User> implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
 
 	@Override
-	public Optional<UserDTO> findById(UUID id) {
-
-		Optional<User> foundEntity = userRepository.findById(id);
-
-		if (foundEntity.isPresent()) {
-
-			return Optional.<UserDTO>of(UserDTO.of(foundEntity.get()));
-		}
-
-		return Optional.<UserDTO>empty();
+	public Optional<UserDto> findByEmail(String email) {
+		return extractDtoFromOptional(userRepository.findByEmail(email));
 	}
 
 	@Override
-	public Optional<UserDTO> findByEmail(String email) {
-
-		Optional<User> foundEntity = userRepository.findByEmail(email);
-
-		if (foundEntity.isPresent()) {
-
-			return Optional.<UserDTO>of(UserDTO.of(foundEntity.get()));
-		}
-
-		return Optional.<UserDTO>empty();
+	protected UserDto buildDto(User entity) {
+		return UserDto.of(entity);
 	}
 
 	@Override
-	public UserDTO save(UserDTO user) {
-
-		User createdUser = userRepository.saveAndFlush(user.createJPAEntity());
-		user.synchronizeWithEntity(createdUser);
-
-		return user;
-	}
-
-	@Override
-	public UserDTO update(UserDTO user) {
-		return save(user);
-	}
-
-	@Override
-	public void delete(UUID id) {
-		userRepository.deleteById(id);
+	protected JpaRepository<User, UUID> getJpaRepository() {
+		return userRepository;
 	}
 }
