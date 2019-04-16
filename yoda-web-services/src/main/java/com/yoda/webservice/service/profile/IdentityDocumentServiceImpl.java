@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,10 +15,12 @@ import com.yoda.webservice.entity.profile.IdentityDocument;
 import com.yoda.webservice.entity.profile.MediaFile;
 import com.yoda.webservice.repository.profile.IdentityDocumentRepository;
 import com.yoda.webservice.repository.profile.MediaFileRepository;
+import com.yoda.webservice.service.BaseJpaBackedService;
 
 @Service("identityDocumentService")
 @Transactional(transactionManager = "profileTransactionManager")
-public class IdentityDocumentServiceImpl implements IdentityDocumentService {
+public class IdentityDocumentServiceImpl extends BaseJpaBackedService<IdentityDocumentDto, IdentityDocument>
+		implements IdentityDocumentService {
 
 	@Autowired
 	private IdentityDocumentRepository identityDocumentRepository;
@@ -26,29 +29,8 @@ public class IdentityDocumentServiceImpl implements IdentityDocumentService {
 	private MediaFileRepository mediaFileRepository;
 
 	@Override
-	public Optional<IdentityDocumentDto> findById(UUID id) {
-
-		Optional<IdentityDocument> foundEntity = identityDocumentRepository.findById(id);
-
-		if (foundEntity.isPresent()) {
-
-			return Optional.<IdentityDocumentDto>of(IdentityDocumentDto.of(foundEntity.get()));
-		}
-
-		return Optional.<IdentityDocumentDto>empty();
-	}
-
-	@Override
 	public Optional<IdentityDocumentDto> findByUserId(UUID userId) {
-		
-		Optional<IdentityDocument> foundEntity = identityDocumentRepository.findByUserId(userId);
-
-		if (foundEntity.isPresent()) {
-
-			return Optional.<IdentityDocumentDto>of(IdentityDocumentDto.of(foundEntity.get()));
-		}
-
-		return Optional.<IdentityDocumentDto>empty();
+		return extractDtoFromOptional(identityDocumentRepository.findByUserId(userId));
 	}
 
 	@Override
@@ -74,16 +56,6 @@ public class IdentityDocumentServiceImpl implements IdentityDocumentService {
 	}
 
 	@Override
-	public IdentityDocumentDto update(IdentityDocumentDto identityDocument) {
-
-		IdentityDocument updatedEntity = identityDocumentRepository.save(identityDocument.createJPAEntity());
-
-		identityDocument.synchronizeWithEntity(updatedEntity);
-
-		return identityDocument;
-	}
-
-	@Override
 	public void delete(UUID identityDocumentId) {
 
 		Optional<IdentityDocument> toBeDeleted = identityDocumentRepository.findById(identityDocumentId);
@@ -95,5 +67,15 @@ public class IdentityDocumentServiceImpl implements IdentityDocumentService {
 			identityDocumentRepository.delete(toBeDeleted.get());
 			mediaFileRepository.deleteById(mediaFileId);
 		}
+	}
+
+	@Override
+	protected IdentityDocumentDto buildDto(IdentityDocument entity) {
+		return IdentityDocumentDto.of(entity);
+	}
+
+	@Override
+	protected JpaRepository<IdentityDocument, UUID> getJpaRepository() {
+		return identityDocumentRepository;
 	}
 }

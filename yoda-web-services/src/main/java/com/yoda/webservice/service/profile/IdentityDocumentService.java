@@ -8,19 +8,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.yoda.webservice.dto.profile.IdentityDocumentDto;
+import com.yoda.webservice.entity.profile.IdentityDocument;
+import com.yoda.webservice.service.JpaBackedService;
 
 @Component
-public interface IdentityDocumentService {
-	
-	public Optional<IdentityDocumentDto> findById(UUID id);
+public interface IdentityDocumentService extends JpaBackedService<IdentityDocumentDto, IdentityDocument> {
 	
 	public Optional<IdentityDocumentDto> findByUserId(UUID userId);
 
 	public IdentityDocumentDto save(IdentityDocumentDto identityDocument, String documentName, MultipartFile document)
 			throws IOException;
-	
-	public IdentityDocumentDto update(IdentityDocumentDto identityDocument);
-
-	public void delete(UUID identityDocumentId);
 
 }

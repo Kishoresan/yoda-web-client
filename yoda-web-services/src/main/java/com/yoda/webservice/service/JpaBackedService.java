@@ -12,9 +12,9 @@ public interface JpaBackedService <T extends Dto<E>, E> {
 
 	public Optional<T> findById(UUID id);
 	
-	public T save(T mediaFile);
+	public T save(T dto);
 
-	public T update(T mediaFile);
+	public T update(T dto);
 	
 	public void delete(UUID id);
 }
