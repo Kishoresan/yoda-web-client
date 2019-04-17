@@ -1,20 +1,22 @@
 package com.yoda.webservice.service;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 
 import com.yoda.webservice.dto.Dto;
 
 @Component
-public interface JpaBackedService <T extends Dto<E>, E> {
+public interface JpaBackedService <T extends Dto<E>, E, I> {
 
-	public Optional<T> findById(UUID id);
+	public List<T> findAll();
+	
+	public Optional<T> findById(I id);
 	
 	public T save(T dto);
 
 	public T update(T dto);
 	
-	public void delete(UUID id);
+	public void delete(I id);
 }

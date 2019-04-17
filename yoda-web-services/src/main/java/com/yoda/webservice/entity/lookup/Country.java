@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(schema = "LOOKUP", name = "T_COUNTRY")
-public class Country implements Serializable{
+public class Country implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

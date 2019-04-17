@@ -1,10 +1,9 @@
-package com.yoda.webservice.controller;
+package com.yoda.webservice.controller.profile;
 
 import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,10 +28,10 @@ public class UserController {
 		Optional<UserDto> foundUser = userService.findById(id);
 		
 		if(foundUser.isPresent()) {
-			return new ResponseEntity<UserDto>(foundUser.get(), HttpStatus.OK);
+			return ResponseEntity.ok().body(foundUser.get());
 		}
 		
-		return new ResponseEntity<UserDto>(HttpStatus.NOT_FOUND);
+		return ResponseEntity.notFound().build();
 	}
 	
 	@RequestMapping(path = "/email/{email}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -41,10 +40,10 @@ public class UserController {
 		Optional<UserDto> foundUser = userService.findByEmail(email);
 		
 		if(foundUser.isPresent()) {
-			return new ResponseEntity<UserDto>(foundUser.get(), HttpStatus.OK);
+			return ResponseEntity.ok().body(foundUser.get());
 		}
 		
-		return new ResponseEntity<UserDto>(HttpStatus.NOT_FOUND);
+		return ResponseEntity.notFound().build();
 	}
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, 
@@ -53,7 +52,7 @@ public class UserController {
 		
 		UserDto createdUser = userService.save(user);
 		
-		return new ResponseEntity<UserDto>(createdUser, HttpStatus.CREATED);
+		return ResponseEntity.ok().body(createdUser);
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)

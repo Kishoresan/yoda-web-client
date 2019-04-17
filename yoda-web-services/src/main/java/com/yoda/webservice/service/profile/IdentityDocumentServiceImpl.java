@@ -19,7 +19,7 @@ import com.yoda.webservice.service.BaseJpaBackedService;
 
 @Service("identityDocumentService")
 @Transactional(transactionManager = "profileTransactionManager")
-public class IdentityDocumentServiceImpl extends BaseJpaBackedService<IdentityDocumentDto, IdentityDocument>
+public class IdentityDocumentServiceImpl extends BaseJpaBackedService<IdentityDocumentDto, IdentityDocument, UUID>
 		implements IdentityDocumentService {
 
 	@Autowired

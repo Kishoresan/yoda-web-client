@@ -1,4 +1,4 @@
-package com.yoda.webservice.controller;
+package com.yoda.webservice.controller.profile;
 
 import java.util.Optional;
 import java.util.UUID;

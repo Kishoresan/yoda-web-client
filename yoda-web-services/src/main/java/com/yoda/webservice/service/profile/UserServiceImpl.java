@@ -15,7 +15,7 @@ import com.yoda.webservice.service.BaseJpaBackedService;
 
 @Service("userService")
 @Transactional(transactionManager = "profileTransactionManager")
-public class UserServiceImpl extends BaseJpaBackedService<UserDto, User> implements UserService {
+public class UserServiceImpl extends BaseJpaBackedService<UserDto, User, UUID> implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;

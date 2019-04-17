@@ -14,11 +14,11 @@ import com.yoda.webservice.service.BaseJpaBackedService;
 
 @Service("mediaFileService")
 @Transactional(transactionManager = "profileTransactionManager")
-public class MediaFileServiceImpl extends BaseJpaBackedService<MediaFileDto, MediaFile> implements MediaFileService {
+public class MediaFileServiceImpl extends BaseJpaBackedService<MediaFileDto, MediaFile, UUID>
+		implements MediaFileService {
 
 	@Autowired
 	private MediaFileRepository mediaFileRepository;
-
 
 	@Override
 	protected MediaFileDto buildDto(MediaFile entity) {

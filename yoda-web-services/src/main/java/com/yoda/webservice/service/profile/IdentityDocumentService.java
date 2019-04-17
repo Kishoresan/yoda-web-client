@@ -12,7 +12,7 @@ import com.yoda.webservice.entity.profile.IdentityDocument;
 import com.yoda.webservice.service.JpaBackedService;
 
 @Component
-public interface IdentityDocumentService extends JpaBackedService<IdentityDocumentDto, IdentityDocument> {
+public interface IdentityDocumentService extends JpaBackedService<IdentityDocumentDto, IdentityDocument, UUID> {
 	
 	public Optional<IdentityDocumentDto> findByUserId(UUID userId);
 

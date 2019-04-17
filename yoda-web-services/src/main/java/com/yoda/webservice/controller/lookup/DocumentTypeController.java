@@ -1,4 +1,4 @@
-package com.yoda.webservice.controller;
+package com.yoda.webservice.controller.lookup;
 
 import java.util.List;
 import java.util.Optional;
