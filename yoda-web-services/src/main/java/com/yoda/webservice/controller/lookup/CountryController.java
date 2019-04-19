@@ -15,7 +15,7 @@ import com.yoda.webservice.dto.lookup.CountryDto;
 import com.yoda.webservice.service.lookup.CountryService;
 
 @RestController
-@RequestMapping("/countries")
+@RequestMapping("/country")
 public class CountryController {
 	
 	@Autowired
