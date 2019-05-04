@@ -1,0 +1,283 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      <img alt="logo" height="40" src="assets/image/logo.png">
+    </ion-title>
+    <ion-label style="font-size: 20px;margin-right: 8px;" slot="end">
+      < UserName>
+    </ion-label>
+    <ion-icon style="font-size: 30px;margin-right: 8px;" slot="end" name="notifications"></ion-icon>
+    <ion-icon style="font-size: 30px;margin-right: 8px;" slot="end" name="log-out"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
+        <div>
+          <ion-grid fixed style="border: 1px dashed #00d58b;border-radius: 10px;">
+            <div class="lable-step">
+              Basic
+            </div>
+            <div class="icon-circle" (click)="isEdit(1)">
+              <ion-icon name="create"></ion-icon>
+            </div>
+            <ion-row>
+              <ion-col class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
+                <ion-item *ngIf="isEditOne">
+                  <ion-label position="stacked">First Name</ion-label>
+                  <ion-input  [(ngModel)]="itemOneObj.firstName" placeholder="enter first name"></ion-input>
+                </ion-item>
+                <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditOne">
+                  First Name:&nbsp;{{itemOneObj.firstName?itemOneObj.firstName:'empty'}}
+                </ion-label>
+              </ion-col>
+              <ion-col class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
+                <ion-item *ngIf="isEditOne">
+                  <ion-label position="stacked">Middle Name</ion-label>
+                  <ion-input [(ngModel)]="itemOneObj.middleName" placeholder="enter middle name"></ion-input>
+                </ion-item>
+                <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditOne">
+                    Middle Name:&nbsp;{{itemOneObj.middleName?itemOneObj.middleName:'empty'}}
+                </ion-label>
+              </ion-col>
+              <ion-col class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
+                <ion-item  *ngIf="isEditOne">
+                  <ion-label position="stacked">Last Name</ion-label>
+                  <ion-input  [(ngModel)]="itemOneObj.lastName" placeholder="enter last name"></ion-input>
+                </ion-item>
+                <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditOne">
+                    Last Name:&nbsp;{{itemOneObj.lastName?itemOneObj.lastName:'empty'}}
+                </ion-label>
+              </ion-col>
+              <ion-col class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
+                <ion-item *ngIf="isEditOne">
+                  <ion-label position="stacked">Email</ion-label>
+                  <ion-input [(ngModel)]="itemOneObj.email" placeholder="enter email address"></ion-input>
+                </ion-item>
+                <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditOne">
+                    Email:&nbsp;{{itemOneObj.email?itemOneObj.email:'empty'}}
+                </ion-label>
+              </ion-col>
+              <ion-col class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
+                <ion-item *ngIf="isEditOne">
+                  <ion-label position="stacked">Date of Birth</ion-label>
+                  <ion-datetime [(ngModel)]="itemOneObj.dateOfBirth" placeholder="YYYY-MM-DD" display-format="YYYY-MM-DD"></ion-datetime>
+                </ion-item>
+                <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditOne">
+                    Date of Birth:&nbsp;{{itemOneObj.dateOfBirth? (itemOneObj.dateOfBirth | date: "yyyy-MM-dd") :'empty'}}
+                </ion-label>
+              </ion-col>
+              <ion-col class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
+                <ion-item *ngIf="isEditOne">
+                  <ion-label position="stacked">Nationality</ion-label>
+                  <ion-select  [(ngModel)]="itemOneObj.nationality" placeholder="select nationality" interface="popover">
+                    <ion-select-option *ngFor="let country of countryDrp"  value="{{country.name}}">{{country.name}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditOne">
+                    Nationality:&nbsp;{{itemOneObj.nationality?itemOneObj.nationality:'empty'}}
+                </ion-label>
+              </ion-col>
+              <ion-col *ngIf="isEditOne" text-right size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12">
+                <br/>
+                <ion-button color="primary" (click)="stepOneSubmit()">Save</ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+        <div style="margin-top:15px;">
+          <ion-grid fixed style="border: 1px dashed #00d58b;border-radius: 10px;">
+            <div class="lable-step">
+              Document
+            </div>
+            <div class="icon-circle" (click)="isEdit(2)">
+              <ion-icon name="create"></ion-icon>
+            </div>
+            <ion-row>
+              <ion-col class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
+                <ion-item *ngIf="isEditTwo">
+                  <ion-label position="stacked">Document</ion-label>
+                  <ion-select [(ngModel)]="itemOneObj.documentId" placeholder="select document" interface="popover">
+                    <ion-select-option *ngFor="let document of documentTypeDrp"  value="{{document.description}}">{{document.description}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditTwo">
+                    Document:&nbsp;{{itemOneObj.documentId?itemOneObj.documentId:'empty'}}
+                </ion-label>
+              </ion-col>
+              <ion-col text-center class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
+                <div>
+                  <div class="icon-circle1">
+                    <ion-icon title="Upload" name="cloud-upload"></ion-icon>
+                  </div>&nbsp;
+                  <div class="icon-circle1">
+                    <ion-icon title="Camera" name="camera"></ion-icon>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col *ngIf="isEditTwo" text-right size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12">
+                <br/>
+                <ion-button color="primary" (click)="stepTwoSubmit()">Save</ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+        <div style="margin-top:15px;">
+          <ion-grid fixed style="border: 1px dashed #00d58b;border-radius: 10px;">
+            <div class="lable-step">
+              Address
+            </div>
+            <div class="icon-circle" (click)="isEdit(3)">
+              <ion-icon name="create"></ion-icon>
+            </div>
+            <ion-row>
+              <ion-col size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
+                <ion-item *ngIf="isEditThree">
+                  <ion-label position="stacked">House No
+                  </ion-label>
+                  <ion-input  [(ngModel)]="itemThreeObj.houseNumber" placeholder="enter house no"></ion-input>
+                </ion-item>
+                <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditThree">
+                    House No:&nbsp;{{itemThreeObj.houseNumber?itemThreeObj.houseNumber:'empty'}}
+                </ion-label>
+              </ion-col>
+              <ion-col size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
+                <ion-item *ngIf="isEditThree">
+                  <ion-label position="stacked">Street
+                  </ion-label>
+                  <ion-input  [(ngModel)]="itemThreeObj.street" placeholder="enter street name"></ion-input>
+                </ion-item>
+                <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditThree">
+                    Street:&nbsp;{{itemThreeObj.street?itemThreeObj.street:'empty'}}
+                </ion-label>
+              </ion-col>
+              <ion-col size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
+                <ion-item *ngIf="isEditThree">
+                  <ion-label position="stacked">City
+                  </ion-label>
+                  <ion-input  [(ngModel)]="itemThreeObj.city" placeholder="enter city name"></ion-input>
+                </ion-item>
+                <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditThree">
+                    City:&nbsp;{{itemThreeObj.city?itemThreeObj.city:'empty'}}
+                </ion-label>
+              </ion-col>
+              <ion-col size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
+                <ion-item *ngIf="isEditThree">
+                  <ion-label position="stacked">Zip
+                  </ion-label>
+                  <ion-input  [(ngModel)]="itemThreeObj.zipCode" placeholder="enter zip code"></ion-input>
+                </ion-item>
+                <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditThree">
+                    Zip:&nbsp;{{itemThreeObj.zipCode?itemThreeObj.zipCode:'empty'}}
+                </ion-label>
+              </ion-col>
+              <ion-col size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
+                <ion-item *ngIf="isEditThree">
+                  <ion-label position="stacked">State / Region
+                  </ion-label>
+                  <ion-input  [(ngModel)]="itemThreeObj.state" placeholder="enter state or region"></ion-input>
+                </ion-item>
+                <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditThree">
+                    State / Region:&nbsp;{{itemThreeObj.state?itemThreeObj.state:'empty'}}
+                </ion-label>
+              </ion-col>
+              <ion-col size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
+                <ion-item *ngIf="isEditThree">
+                  <ion-label position="stacked">Country
+                  </ion-label>
+                  <ion-select  [(ngModel)]="itemThreeObj.countryCode" placeholder="select country" interface="popover">
+                    <ion-select-option value="India">India</ion-select-option>
+                    <ion-select-option value="USA">USA</ion-select-option>
+                    <ion-select-option value="UK">UK</ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditThree">
+                    Country:&nbsp;{{itemThreeObj.countryCode?itemThreeObj.countryCode:'empty'}}
+                </ion-label>
+              </ion-col>
+              <ion-col *ngIf="isEditThree" text-right size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12">
+                <br/>
+                <ion-button color="primary" (click)="stepThreeSubmit()">Save</ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+        <div style="margin-top:15px;">
+          <ion-grid fixed style="border: 1px dashed #00d58b;border-radius: 10px;">
+            <div class="lable-step">
+              Number
+            </div>
+            <div class="icon-circle" (click)="isEdit(4)">
+              <ion-icon name="create"></ion-icon>
+            </div>
+            <ion-row>
+              <ion-col *ngIf="isEditFour" size="4" size-sm="4" size-md="3" size-lg="3" size-xl="3">
+                <ion-item>
+                  <ion-label position="stacked">Home</ion-label>
+                  <ion-select disabled="{{!isEditFour}}" [(ngModel)]="itemOneObj.home_phone_code" placeholder="Code" interface="popover">
+                    <ion-select-option value="+91">+91</ion-select-option>
+                    <ion-select-option value="+42">+42</ion-select-option>
+                    <ion-select-option value="+45">+45</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+              <ion-col size="8" size-sm="8" size-md="9" size-lg="9" size-xl="9">
+                <ion-item *ngIf="isEditFour">
+                  <ion-label position="stacked">&nbsp;</ion-label>
+                  <ion-input readonly="{{!isEditFour}}" [(ngModel)]="itemOneObj.home_phone_number" placeholder="Number"></ion-input>
+                </ion-item>
+                <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditFour">
+                    Home:&nbsp;{{itemOneObj.home_phone_code?itemOneObj.home_phone_code:''}}&nbsp;{{itemOneObj.home_phone_number?itemOneObj.home_phone_number:'empty'}}
+                </ion-label>
+              </ion-col>
+
+              <ion-col *ngIf="isEditFour" size="4" size-sm="4" size-md="3" size-lg="3" size-xl="3">
+                <ion-item *ngIf="isEditFour">
+                  <ion-label position="stacked">Mobile</ion-label>
+                  <ion-select disabled="{{!isEditFour}}" [(ngModel)]="itemOneObj.mobile_code" placeholder="Code" interface="popover">
+                    <ion-select-option value="+91">+91</ion-select-option>
+                    <ion-select-option value="+42">+42</ion-select-option>
+                    <ion-select-option value="+45">+45</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+              <ion-col size="8" size-sm="8" size-md="9" size-lg="9" size-xl="9">
+                <ion-item *ngIf="isEditFour">
+                  <ion-label position="stacked">&nbsp;</ion-label>
+                  <ion-input readonly="{{!isEditFour}}" [(ngModel)]="itemOneObj.mobile_number" placeholder="Number"></ion-input>
+                </ion-item>
+                <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditFour">
+                    Mobile:&nbsp;{{itemOneObj.mobile_code?itemOneObj.mobile_code:''}}&nbsp;{{itemOneObj.mobile_number?itemOneObj.mobile_number:'empty'}}
+                </ion-label>
+              </ion-col>
+              <ion-col *ngIf="isEditFour" size="4" size-sm="4" size-md="3" size-lg="3" size-xl="3">
+                <ion-item>
+                  <ion-label position="stacked">Office</ion-label>
+                  <ion-select disabled="{{!isEditFour}}" [(ngModel)]="itemOneObj.office_phone_code" placeholder="Code" interface="popover">
+                    <ion-select-option value="+91">+91</ion-select-option>
+                    <ion-select-option value="+42">+42</ion-select-option>
+                    <ion-select-option value="+45">+45</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+              <ion-col size="8" size-sm="8" size-md="9" size-lg="9" size-xl="9">
+                <ion-item *ngIf="isEditFour">
+                  <ion-label position="stacked">&nbsp;</ion-label>
+                  <ion-input readonly="{{!isEditFour}}" [(ngModel)]="itemOneObj.office_phone_number" placeholder="Number"></ion-input>
+                </ion-item>
+                <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditFour">
+                    Office:&nbsp;{{itemOneObj.office_phone_code?itemOneObj.office_phone_code:''}}&nbsp;{{itemOneObj.office_phone_number?itemOneObj.office_phone_number:'empty'}}
+                </ion-label>
+              </ion-col>
+              <ion-col *ngIf="isEditFour" text-right size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12">
+                <br/>
+                <ion-button color="primary" (click)="stepFourSubmit()">Save</ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
