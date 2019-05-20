@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import { CountryService } from '../country.service';
+import { Country } from '../entity/Country';
+import { DocumentService } from '../document.service';
+import { PhoneService } from '../phone.service';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
-export class ProfilePage {
+export class ProfilePage implements OnInit {
 
   countryDrp: any = [];
   documentTypeDrp: any = [];
@@ -53,35 +57,26 @@ export class ProfilePage {
   isEditThree: any = false;
   isEditFour: any = false;
 
-  constructor(public toastController: ToastController, private fileChooser: FileChooser) {
-    this.countryDrp = [
-      {
-        "code": '1', "name": "India", "phoneCode": "91"
-      },
-      {
-        "code": '2', "name": "USA", "phoneCode": "92"
-      },
-      {
-        "code": '3', "name": "UK", "phoneCode": "93"
-      }
-    ]
-    this.documentTypeDrp = [
-      {
-        "code": "1", "description": "Aadhaar card"
-      },
-      {
-        "code": "2", "description": "Passport"
-      },
-      {
-        "code": "3", "description": "Driving licence"
-      },
-      {
-        "code": "4", "description": "Birth certificate"
-      },
-      {
-        "code": "5", "description": "Pan card"
-      }
-    ]
+  ngOnInit() {
+
+    this.countryService.getCountries()
+      .subscribe(lists => {
+        this.countryDrp  = lists;
+    });
+
+    this.documentService.getDocumentTypes()
+      .subscribe(lists => {
+        this.documentTypeDrp = lists;
+    });
+
+    this.phoneService.getPhoneTypes()
+      .subscribe(lists => {
+        this.phoneTypeDrp = lists;
+    });
+  }
+
+  constructor(public toastController: ToastController, private fileChooser: FileChooser, private countryService: CountryService,
+    private documentService: DocumentService, private phoneService: PhoneService) {
   }
   stepOneSubmit() {
     if (this.isInvalid(this.itemOneObj.firstName) ||
