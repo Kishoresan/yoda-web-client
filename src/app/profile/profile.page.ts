@@ -5,6 +5,8 @@ import { CountryService } from '../country.service';
 import { Country } from '../entity/Country';
 import { DocumentService } from '../document.service';
 import { PhoneService } from '../phone.service';
+import { UserService } from '../user.service';
+import { User } from '../entity/User';
 
 @Component({
   selector: 'app-profile',
@@ -76,7 +78,7 @@ export class ProfilePage implements OnInit {
   }
 
   constructor(public toastController: ToastController, private fileChooser: FileChooser, private countryService: CountryService,
-    private documentService: DocumentService, private phoneService: PhoneService) {
+    private documentService: DocumentService, private phoneService: PhoneService, private userService: UserService) {
   }
   stepOneSubmit() {
     if (this.isInvalid(this.itemOneObj.firstName) ||
@@ -87,7 +89,8 @@ export class ProfilePage implements OnInit {
       this.presentToast(msg, 'danger');
       return false;
     } else {
-      let msg = 'Save Success'
+      let msg = 'Save Success';
+      this.userService.saveUser(this.itemOneObj);
       this.presentToast(msg, 'success');
       this.isEditOne = false;
     }
