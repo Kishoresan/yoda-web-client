@@ -4,7 +4,7 @@
       <img alt="logo" height="40" src="assets/image/logo.png">
     </ion-title>
     <ion-label style="font-size: 20px;margin-right: 8px;" slot="end">
-      < UserName>
+      {{getLoggedInUser()}}
     </ion-label>
     <ion-icon style="font-size: 30px;margin-right: 8px;" slot="end" name="notifications"></ion-icon>
     <ion-icon style="font-size: 30px;margin-right: 8px;" slot="end" name="log-out"></ion-icon>
@@ -187,9 +187,7 @@
                   <ion-label position="stacked">Country
                   </ion-label>
                   <ion-select  [(ngModel)]="itemThreeObj.countryCode" placeholder="select country" interface="popover">
-                    <ion-select-option value="India">India</ion-select-option>
-                    <ion-select-option value="USA">USA</ion-select-option>
-                    <ion-select-option value="UK">UK</ion-select-option>
+                   
                   </ion-select>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditThree">

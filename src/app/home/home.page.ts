@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ToastController } from '@ionic/angular';
+import { AuthenticationService } from '../authentication.service';
 
 @Component({
   selector: 'app-home',
@@ -8,9 +9,7 @@ import { ToastController } from '@ionic/angular';
 })
 export class HomePage {
 
-  
-
-  constructor(public toastController: ToastController) { }
+  constructor(public toastController: ToastController, private authenticationService: AuthenticationService) { }
 
   async presentToast(message, color) {
     const toast = await this.toastController.create({
@@ -21,6 +20,10 @@ export class HomePage {
       showCloseButton: true
     });
     toast.present();
+  }
+
+  getLoggedInUser() {
+    return this.authenticationService.getLoggedInUser();
   }
 
 

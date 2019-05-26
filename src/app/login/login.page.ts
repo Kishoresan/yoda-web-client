@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { AuthenticationService } from '../authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginPage implements OnInit {
     password: "123456"
   }
 
-  constructor(public toastController: ToastController, private router: Router) { }
+  constructor(public toastController: ToastController, private router: Router, private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
   }
@@ -37,12 +38,12 @@ export class LoginPage implements OnInit {
       this.presentToast(msg, 'danger');
       return false;
     } else {
-      if (this.itemObj.email == 'test@gmail.com' && this.itemObj.password == '123456') {
-        let msg = 'Sign In Success'
+      if (this.authenticationService.authenticate(this.itemObj.email, this.itemObj.password)) {
+        const msg = 'Sign In Success';
         this.presentToast(msg, 'success');
         this.router.navigate(['tabs']);
       } else {
-        let msg = 'Invalid Email Or Password'
+        const msg = 'Invalid Email Or Password';
         this.presentToast(msg, 'danger');
         return false;
       }

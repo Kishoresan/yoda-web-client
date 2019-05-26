@@ -7,6 +7,7 @@ import { DocumentService } from '../document.service';
 import { PhoneService } from '../phone.service';
 import { UserService } from '../user.service';
 import { User } from '../entity/User';
+import { AuthenticationService } from '../authentication.service';
 
 @Component({
   selector: 'app-profile',
@@ -78,7 +79,8 @@ export class ProfilePage implements OnInit {
   }
 
   constructor(public toastController: ToastController, private fileChooser: FileChooser, private countryService: CountryService,
-    private documentService: DocumentService, private phoneService: PhoneService, private userService: UserService) {
+    private documentService: DocumentService, private phoneService: PhoneService, private userService: UserService, 
+    private authenticationService: AuthenticationService) {
   }
   stepOneSubmit() {
     if (this.isInvalid(this.itemOneObj.firstName) ||
@@ -169,4 +171,10 @@ export class ProfilePage implements OnInit {
     });
     toast.present();
   }
+
+
+  getLoggedInUser() {
+    return this.authenticationService.getLoggedInUser();
+  }
+
 }
