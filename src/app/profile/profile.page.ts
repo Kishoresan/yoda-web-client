@@ -22,7 +22,6 @@ export class ProfilePage implements OnInit {
 
   itemOneObj: any = {
     "id": "",
-    "email": "",
     "firstName": "",
     "middleName": "",
     "lastName": "",
@@ -55,6 +54,8 @@ export class ProfilePage implements OnInit {
     "number": ""
   }
 
+  userId: any ;
+
   isEditOne: any = false;
   isEditTwo: any = false;
   isEditThree: any = false;
@@ -76,23 +77,47 @@ export class ProfilePage implements OnInit {
       .subscribe(lists => {
         this.phoneTypeDrp = lists;
     });
+
+
+    this.userService.getUserByEmail(this.getLoggedInUser())
+      .subscribe(user => {
+        this.itemOneObj.firstName = user.firstName;
+        this.itemOneObj.middleName = user.middleName;
+        this.itemOneObj.lastName = user.lastName;
+        this.itemOneObj.dateOfBirth = user.dateOfBirth;
+        this.itemOneObj.nationality = user.nationality;
+        this.itemOneObj.id = user.id;
+        this.itemOneObj.email = user.email;
+      });
+
+    this.userService.getUserAddress(this.getLoggedInUser())
+      .subscribe(address => {
+        this.itemThreeObj.id = address.id;
+        this.itemThreeObj.userId = this.userId;
+        this.itemThreeObj.houseNumber = address.houseNumber;
+        this.itemThreeObj.street = address.street;
+        this.itemThreeObj.city = address.city;
+        this.itemThreeObj.zipCode = address.zipcode;
+        this.itemThreeObj.state = address.state;
+        this.itemThreeObj.countryCode = address.countryCode;
+      });
   }
 
   constructor(public toastController: ToastController, private fileChooser: FileChooser, private countryService: CountryService,
-    private documentService: DocumentService, private phoneService: PhoneService, private userService: UserService, 
+    private documentService: DocumentService, private phoneService: PhoneService, private userService: UserService,
     private authenticationService: AuthenticationService) {
   }
-  stepOneSubmit() {
+  updateBasicInfo() {
     if (this.isInvalid(this.itemOneObj.firstName) ||
       this.isInvalid(this.itemOneObj.lastName) ||
       this.isInvalid(this.itemOneObj.middleName) ||
       this.isInvalid(this.itemOneObj.dateOfBirth)) {
-      let msg = 'Fill In the Required Information.'
+      const msg = 'Please fill in the required information.';
       this.presentToast(msg, 'danger');
       return false;
     } else {
-      let msg = 'Save Success';
-      this.userService.saveUser(this.itemOneObj);
+      const msg = 'Save Success';
+      this.userService.updateUser(this.itemOneObj);
       this.presentToast(msg, 'success');
       this.isEditOne = false;
     }
@@ -108,18 +133,18 @@ export class ProfilePage implements OnInit {
       this.isEditTwo = false;
     }
   }
-  stepThreeSubmit() {
+  updateAddress() {
     if (this.isInvalid(this.itemThreeObj.houseNumber) ||
       this.isInvalid(this.itemThreeObj.street) ||
       this.isInvalid(this.itemThreeObj.city) ||
       this.isInvalid(this.itemThreeObj.zipCode) ||
-      this.isInvalid(this.itemThreeObj.state) ||
-      this.isInvalid(this.itemThreeObj.countryCode)) {
-      let msg = 'Fill In the Required Information.'
+      this.isInvalid(this.itemThreeObj.state)) {
+      const msg = 'Fill In the Required Information.';
       this.presentToast(msg, 'danger');
       return false;
     } else {
-      let msg = 'Save Success'
+      const msg = 'Save Success';
+      this.userService.saveOrUpdateUserAddress(this.itemOneObj.id , this.itemThreeObj);
       this.presentToast(msg, 'success');
       this.isEditThree = false;
     }

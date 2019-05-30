@@ -29,7 +29,7 @@
                   <ion-input  [(ngModel)]="itemOneObj.firstName" placeholder="enter first name"></ion-input>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditOne">
-                  First Name:&nbsp;{{itemOneObj.firstName?itemOneObj.firstName:'empty'}}
+                  First Name:&nbsp;{{itemOneObj.firstName}}
                 </ion-label>
               </ion-col>
               <ion-col class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
@@ -38,7 +38,7 @@
                   <ion-input [(ngModel)]="itemOneObj.middleName" placeholder="enter middle name"></ion-input>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditOne">
-                    Middle Name:&nbsp;{{itemOneObj.middleName?itemOneObj.middleName:'empty'}}
+                    Middle Name:&nbsp;{{itemOneObj.middleName}}
                 </ion-label>
               </ion-col>
               <ion-col class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
@@ -47,7 +47,7 @@
                   <ion-input  [(ngModel)]="itemOneObj.lastName" placeholder="enter last name"></ion-input>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditOne">
-                    Last Name:&nbsp;{{itemOneObj.lastName?itemOneObj.lastName:'empty'}}
+                    Last Name:&nbsp;{{itemOneObj.lastName}}
                 </ion-label>
               </ion-col>
               <ion-col class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
@@ -56,7 +56,7 @@
                   <ion-input [(ngModel)]="itemOneObj.email" placeholder="enter email address"></ion-input>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditOne">
-                    Email:&nbsp;{{itemOneObj.email?itemOneObj.email:'empty'}}
+                    Email:&nbsp;{{itemOneObj.email}}
                 </ion-label>
               </ion-col>
               <ion-col class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
@@ -65,7 +65,7 @@
                   <ion-datetime [(ngModel)]="itemOneObj.dateOfBirth" placeholder="YYYY-MM-DD" display-format="YYYY-MM-DD"></ion-datetime>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditOne">
-                    Date of Birth:&nbsp;{{itemOneObj.dateOfBirth? (itemOneObj.dateOfBirth | date: "yyyy-MM-dd") :'empty'}}
+                    Date of Birth:&nbsp;{{itemOneObj.dateOfBirth}}
                 </ion-label>
               </ion-col>
               <ion-col class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
@@ -76,12 +76,12 @@
                   </ion-select>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditOne">
-                    Nationality:&nbsp;{{itemOneObj.nationality?itemOneObj.nationality:'empty'}}
+                    Nationality:&nbsp;{{itemOneObj.nationality}}
                 </ion-label>
               </ion-col>
               <ion-col *ngIf="isEditOne" text-right size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12">
                 <br/>
-                <ion-button color="primary" (click)="stepOneSubmit()">Save</ion-button>
+                <ion-button color="primary" (click)="updateBasicInfo()">Save</ion-button>
               </ion-col>
             </ion-row>
           </ion-grid>
@@ -139,7 +139,7 @@
                   <ion-input  [(ngModel)]="itemThreeObj.houseNumber" placeholder="enter house no"></ion-input>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditThree">
-                    House No:&nbsp;{{itemThreeObj.houseNumber?itemThreeObj.houseNumber:'empty'}}
+                    House No:&nbsp;{{itemThreeObj.houseNumber}}
                 </ion-label>
               </ion-col>
               <ion-col size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
@@ -149,7 +149,7 @@
                   <ion-input  [(ngModel)]="itemThreeObj.street" placeholder="enter street name"></ion-input>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditThree">
-                    Street:&nbsp;{{itemThreeObj.street?itemThreeObj.street:'empty'}}
+                    Street:&nbsp;{{itemThreeObj.street}}
                 </ion-label>
               </ion-col>
               <ion-col size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
@@ -159,7 +159,7 @@
                   <ion-input  [(ngModel)]="itemThreeObj.city" placeholder="enter city name"></ion-input>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditThree">
-                    City:&nbsp;{{itemThreeObj.city?itemThreeObj.city:'empty'}}
+                    City:&nbsp;{{itemThreeObj.city}}
                 </ion-label>
               </ion-col>
               <ion-col size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
@@ -169,7 +169,7 @@
                   <ion-input  [(ngModel)]="itemThreeObj.zipCode" placeholder="enter zip code"></ion-input>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditThree">
-                    Zip:&nbsp;{{itemThreeObj.zipCode?itemThreeObj.zipCode:'empty'}}
+                    Zip:&nbsp;{{itemThreeObj.zipCode}}
                 </ion-label>
               </ion-col>
               <ion-col size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
@@ -179,7 +179,7 @@
                   <ion-input  [(ngModel)]="itemThreeObj.state" placeholder="enter state or region"></ion-input>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditThree">
-                    State / Region:&nbsp;{{itemThreeObj.state?itemThreeObj.state:'empty'}}
+                    State / Region:&nbsp;{{itemThreeObj.state}}
                 </ion-label>
               </ion-col>
               <ion-col size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
@@ -187,16 +187,16 @@
                   <ion-label position="stacked">Country
                   </ion-label>
                   <ion-select  [(ngModel)]="itemThreeObj.countryCode" placeholder="select country" interface="popover">
-                   
+                    <ion-select-option *ngFor="let country of countryDrp"  value="{{country.code}}">{{country.name}}</ion-select-option>
                   </ion-select>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditThree">
-                    Country:&nbsp;{{itemThreeObj.countryCode?itemThreeObj.countryCode:'empty'}}
+                    Country:&nbsp;{{itemThreeObj.countryCode}}
                 </ion-label>
               </ion-col>
               <ion-col *ngIf="isEditThree" text-right size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12">
                 <br/>
-                <ion-button color="primary" (click)="stepThreeSubmit()">Save</ion-button>
+                <ion-button color="primary" (click)="updateAddress()">Save</ion-button>
               </ion-col>
             </ion-row>
           </ion-grid>

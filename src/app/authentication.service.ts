@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +18,7 @@ export class AuthenticationService {
   }
 
   isUserLoggedIn() {
-    const loggedInUser = sessionStorage.getItem('loggedInUser');
-    console.log(!(loggedInUser === null));
-    return !(loggedInUser === null);
+    return sessionStorage.getItem('loggedInUser') !== null;
   }
 
   getLoggedInUser() {
