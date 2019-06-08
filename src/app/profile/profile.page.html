@@ -72,7 +72,7 @@
                 <ion-item *ngIf="isEditOne">
                   <ion-label position="stacked">Nationality</ion-label>
                   <ion-select  [(ngModel)]="itemOneObj.nationality" placeholder="select nationality" interface="popover">
-                    <ion-select-option *ngFor="let country of countryDrp"  value="{{country.code}}">{{country.name}}</ion-select-option>
+                    <ion-select-option *ngFor="let country of countryDrp"  value="{{country.id}}">{{country.countryNiceName}}</ion-select-option>
                   </ion-select>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditOne">
@@ -187,7 +187,7 @@
                   <ion-label position="stacked">Country
                   </ion-label>
                   <ion-select  [(ngModel)]="itemThreeObj.countryCode" placeholder="select country" interface="popover">
-                    <ion-select-option *ngFor="let country of countryDrp"  value="{{country.code}}">{{country.name}}</ion-select-option>
+                    <ion-select-option *ngFor="let country of countryDrp"  value="{{country.id}}">{{country.countryNiceName}}</ion-select-option>
                   </ion-select>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditThree">
