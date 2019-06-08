@@ -213,9 +213,9 @@
               <ion-col *ngIf="isEditFour" size="4" size-sm="4" size-md="3" size-lg="3" size-xl="3">
                 <ion-item>
                   <ion-label position="stacked">Home</ion-label>
-                  <ion-select disabled="{{!isEditFour}}" [(ngModel)]="itemOneObj.home_phone_code" placeholder="Code" interface="popover">
+                  <ion-select disabled="{{!isEditFour}}" [(ngModel)]="homeNumber.countryCode" placeholder="Code" interface="popover">
                     <ion-select-option value="+91">+91</ion-select-option>
-                    <ion-select-option value="+42">+42</ion-select-option>
+                    <ion-select-option value="+41">+41</ion-select-option>
                     <ion-select-option value="+45">+45</ion-select-option>
                   </ion-select>
                 </ion-item>
@@ -223,10 +223,10 @@
               <ion-col size="8" size-sm="8" size-md="9" size-lg="9" size-xl="9">
                 <ion-item *ngIf="isEditFour">
                   <ion-label position="stacked">&nbsp;</ion-label>
-                  <ion-input readonly="{{!isEditFour}}" [(ngModel)]="itemOneObj.home_phone_number" placeholder="Number"></ion-input>
+                  <ion-input readonly="{{!isEditFour}}" [(ngModel)]="homeNumber.number" placeholder="Number"></ion-input>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditFour">
-                    Home:&nbsp;{{itemOneObj.home_phone_code?itemOneObj.home_phone_code:''}}&nbsp;{{itemOneObj.home_phone_number?itemOneObj.home_phone_number:'empty'}}
+                    Home:&nbsp;{{itemOneObj.home_phone_code?itemOneObj.home_phone_code:''}}&nbsp;{{homeNumber.number}}
                 </ion-label>
               </ion-col>
 
@@ -235,7 +235,7 @@
                   <ion-label position="stacked">Mobile</ion-label>
                   <ion-select disabled="{{!isEditFour}}" [(ngModel)]="itemOneObj.mobile_code" placeholder="Code" interface="popover">
                     <ion-select-option value="+91">+91</ion-select-option>
-                    <ion-select-option value="+42">+42</ion-select-option>
+                    <ion-select-option value="+41">+41</ion-select-option>
                     <ion-select-option value="+45">+45</ion-select-option>
                   </ion-select>
                 </ion-item>
@@ -243,10 +243,10 @@
               <ion-col size="8" size-sm="8" size-md="9" size-lg="9" size-xl="9">
                 <ion-item *ngIf="isEditFour">
                   <ion-label position="stacked">&nbsp;</ion-label>
-                  <ion-input readonly="{{!isEditFour}}" [(ngModel)]="itemOneObj.mobile_number" placeholder="Number"></ion-input>
+                  <ion-input readonly="{{!isEditFour}}" [(ngModel)]="mobileNumber.number" placeholder="Number"></ion-input>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditFour">
-                    Mobile:&nbsp;{{itemOneObj.mobile_code?itemOneObj.mobile_code:''}}&nbsp;{{itemOneObj.mobile_number?itemOneObj.mobile_number:'empty'}}
+                    Mobile:&nbsp;{{itemOneObj.mobile_code?itemOneObj.mobile_code:''}}&nbsp;{{mobileNumber.number}}
                 </ion-label>
               </ion-col>
               <ion-col *ngIf="isEditFour" size="4" size-sm="4" size-md="3" size-lg="3" size-xl="3">
@@ -254,7 +254,7 @@
                   <ion-label position="stacked">Office</ion-label>
                   <ion-select disabled="{{!isEditFour}}" [(ngModel)]="itemOneObj.office_phone_code" placeholder="Code" interface="popover">
                     <ion-select-option value="+91">+91</ion-select-option>
-                    <ion-select-option value="+42">+42</ion-select-option>
+                    <ion-select-option value="+41">+41</ion-select-option>
                     <ion-select-option value="+45">+45</ion-select-option>
                   </ion-select>
                 </ion-item>
@@ -262,10 +262,10 @@
               <ion-col size="8" size-sm="8" size-md="9" size-lg="9" size-xl="9">
                 <ion-item *ngIf="isEditFour">
                   <ion-label position="stacked">&nbsp;</ion-label>
-                  <ion-input readonly="{{!isEditFour}}" [(ngModel)]="itemOneObj.office_phone_number" placeholder="Number"></ion-input>
+                  <ion-input readonly="{{!isEditFour}}" [(ngModel)]="officeNumber.number" placeholder="Number"></ion-input>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditFour">
-                    Office:&nbsp;{{itemOneObj.office_phone_code?itemOneObj.office_phone_code:''}}&nbsp;{{itemOneObj.office_phone_number?itemOneObj.office_phone_number:'empty'}}
+                    Office:&nbsp;{{itemOneObj.office_phone_code?itemOneObj.office_phone_code:''}}&nbsp;{{officeNumber.number}}
                 </ion-label>
               </ion-col>
               <ion-col *ngIf="isEditFour" text-right size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12">

@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { User } from './entity/User';
 import { Address } from './entity/Address';
+import { PhoneNumber } from './entity/PhoneNumber';
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +46,21 @@ export class UserService {
     address.userId = userId;
 
     return this.http.put<Address>(this.apiURL + '/userAddress/', address).subscribe(
+      (res) => console.log(res),
+      (err) => console.log(err)
+    );
+  }
+
+  getPhoneNumber(username) {
+    return this.http.get<PhoneNumber[]>(this.apiURL + '/phoneNumber/userName/' + username);
+  }
+
+ saveOrUpdatePhoneNumber(userId, phoneNumber, phoneType) {
+  phoneNumber.userId = userId;
+  phoneNumber.phoneType = phoneType;
+  phoneNumber.countryCode = 1;
+
+    return this.http.put<PhoneNumber>(this.apiURL + '/phoneNumber/', phoneNumber).subscribe(
       (res) => console.log(res),
       (err) => console.log(err)
     );

@@ -46,7 +46,23 @@ export class ProfilePage implements OnInit {
     "countryCode": ""
   }
 
-  itemFourObj: any = {
+  homeNumber: any = {
+    "id": "",
+    "userId": "",
+    "phoneType": "",
+    "countryCode": "",
+    "number": ""
+  }
+
+  mobileNumber: any = {
+    "id": "",
+    "userId": "",
+    "phoneType": "",
+    "countryCode": "",
+    "number": ""
+  }
+
+  officeNumber: any = {
     "id": "",
     "userId": "",
     "phoneType": "",
@@ -101,6 +117,39 @@ export class ProfilePage implements OnInit {
         this.itemThreeObj.state = address.state;
         this.itemThreeObj.countryCode = address.countryCode;
       });
+
+      this.userService.getPhoneNumber(this.getLoggedInUser())
+       .subscribe(phoneNumber => {
+         for (let i = 0; i < phoneNumber.length; i++) {
+          if (phoneNumber[i].phoneType === 1) {
+            this.mobileNumber.id = phoneNumber[i].id;
+            this.mobileNumber.userId = phoneNumber[i].userId;
+            this.mobileNumber.phoneType = phoneNumber[i].phoneType;
+            this.mobileNumber.countryCode = phoneNumber[i].countryCode;
+            this.mobileNumber.number = phoneNumber[i].number;
+          }
+
+          if (phoneNumber[i].phoneType === 2) {
+            this.homeNumber.id = phoneNumber[i].id;
+            this.homeNumber.userId = phoneNumber[i].userId;
+            this.homeNumber.phoneType = phoneNumber[i].phoneType;
+            this.homeNumber.countryCode = phoneNumber[i].countryCode;
+            this.homeNumber.number = phoneNumber[i].number;
+          }
+
+          if (phoneNumber[i].phoneType === 3) {
+            this.officeNumber.id = phoneNumber[i].id;
+            this.officeNumber.userId = phoneNumber[i].userId;
+            this.officeNumber.phoneType = phoneNumber[i].phoneType;
+            this.officeNumber.countryCode = phoneNumber[i].countryCode;
+            this.officeNumber.number = phoneNumber[i].number;
+          }
+
+         }
+       });
+
+
+
   }
 
   constructor(public toastController: ToastController, private fileChooser: FileChooser, private countryService: CountryService,
@@ -150,14 +199,15 @@ export class ProfilePage implements OnInit {
     }
   }
   stepFourSubmit() {
-    if (this.isInvalid(this.itemOneObj.home_phone_number) ||
-      this.isInvalid(this.itemOneObj.mobile_number) ||
-      this.isInvalid(this.itemOneObj.office_phone_number)) {
-      let msg = 'Fill In the Required Information.'
+    if (false) {
+      const msg = 'Fill In the Required Information.';
       this.presentToast(msg, 'danger');
       return false;
     } else {
-      let msg = 'Save Success.'
+      const msg = 'Save Success.';
+      this.userService.saveOrUpdatePhoneNumber(this.itemOneObj.id, this.mobileNumber, 1);
+      this.userService.saveOrUpdatePhoneNumber(this.itemOneObj.id, this.homeNumber, 2);
+      this.userService.saveOrUpdatePhoneNumber(this.itemOneObj.id, this.officeNumber, 3);
       this.presentToast(msg, 'success');
       this.isEditFour = false;
     }
