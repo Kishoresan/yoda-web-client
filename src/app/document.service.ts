@@ -7,7 +7,7 @@ import { DocumentType } from './entity/DocumentType';
 })
 export class DocumentService {
 
-  apiURL = 'http://localhost:8080';
+  apiURL = 'http://localhost:8080/api';
 
   constructor(private http: HttpClient) {
   }

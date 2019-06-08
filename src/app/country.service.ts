@@ -9,7 +9,7 @@ import { Country } from '../app/entity/Country';
 })
 export class CountryService {
 
-  apiURL = 'http://localhost:8080';
+  apiURL = 'http://localhost:8080/api';
 
   constructor(private http: HttpClient) {
   }
