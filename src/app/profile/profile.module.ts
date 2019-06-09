@@ -7,6 +7,11 @@ import { IonicModule } from '@ionic/angular';
 
 import { ProfilePage } from './profile.page';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
+
+
+import { MultiFileUploadComponent } from '../components/multi-file-upload/multi-file-upload.component';
+import { FileUploadModule } from 'ng2-file-upload';
+
 const routes: Routes = [
   {
     path: '',
@@ -19,9 +24,10 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    FileUploadModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ProfilePage],
+  declarations: [ProfilePage, MultiFileUploadComponent],
   providers: [FileChooser]
 })
 export class ProfilePageModule {}

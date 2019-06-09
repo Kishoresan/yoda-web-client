@@ -9,12 +9,23 @@ import { UserService } from '../user.service';
 import { User } from '../entity/User';
 import { AuthenticationService } from '../authentication.service';
 
+import { HttpClient,  HttpEventType  } from '@angular/common/http';
+
+import { FormBuilder, FormGroup } from '@angular/forms';
+
+import { ViewChild } from '@angular/core';
+import { MultiFileUploadComponent } from '../components/multi-file-upload/multi-file-upload.component';
+
+
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
+
+  @ViewChild(MultiFileUploadComponent) fileField: MultiFileUploadComponent;
 
   countryDrp: any = [];
   documentTypeDrp: any = [];
@@ -31,8 +42,8 @@ export class ProfilePage implements OnInit {
 
   itemTwoObj: any = {
     "id": "",
-    "documentId": "",
-    "file": ""
+    "documentTypeCode": "",
+    "fileId": ""
   }
 
   itemThreeObj: any = {
@@ -92,6 +103,13 @@ export class ProfilePage implements OnInit {
     this.phoneService.getPhoneTypes()
       .subscribe(lists => {
         this.phoneTypeDrp = lists;
+    });
+
+    this.documentService.getDocumentByUserName(this.getLoggedInUser())
+      .subscribe(document => {
+       this.itemTwoObj.id = document[0].id;
+       this.itemTwoObj.documentTypeCode = document[0].documentTypeCode;
+       this.itemTwoObj.fileId = document[0].mediaFileId;
     });
 
 
@@ -154,7 +172,7 @@ export class ProfilePage implements OnInit {
 
   constructor(public toastController: ToastController, private fileChooser: FileChooser, private countryService: CountryService,
     private documentService: DocumentService, private phoneService: PhoneService, private userService: UserService,
-    private authenticationService: AuthenticationService) {
+    private authenticationService: AuthenticationService, private http: HttpClient) {
   }
   updateBasicInfo() {
     if (this.isInvalid(this.itemOneObj.firstName) ||
@@ -172,12 +190,13 @@ export class ProfilePage implements OnInit {
     }
   }
   stepTwoSubmit() {
-    if (this.isInvalid(this.itemOneObj.documentId)) {
-      let msg = 'Fill In the Required Information.'
+    if (false) {
+      const msg = 'Fill In the Required Information.';
       this.presentToast(msg, 'danger');
       return false;
     } else {
-      let msg = 'Save Success.'
+      const msg = 'Save Success.';
+      this.upload();
       this.presentToast(msg, 'success');
       this.isEditTwo = false;
     }
@@ -212,30 +231,26 @@ export class ProfilePage implements OnInit {
       this.isEditFour = false;
     }
   }
-  chooseFile() {
-    this.fileChooser.open().then(uri => {
-      console.log(uri)
-    }).catch(e => {
-      console.log(e)
-    });
-  }
+
   isEdit(type) {
-    if (type == 1) {
+    if (type === 1) {
       this.isEditOne = !this.isEditOne;
-    } else if (type == 2) {
+    } else if (type === 2) {
       this.isEditTwo = !this.isEditTwo;
-    } else if (type == 3) {
+    } else if (type === 3) {
       this.isEditThree = !this.isEditThree;
     } else {
       this.isEditFour = !this.isEditFour;
     }
   }
+
   isInvalid(field) {
-    if (field == '' || field == null || field == undefined) {
+    if (field === '' || field === null || field === undefined) {
       return true;
     }
     return false;
   }
+  
   async presentToast(message, color) {
     const toast = await this.toastController.create({
       message: message,
@@ -250,6 +265,32 @@ export class ProfilePage implements OnInit {
 
   getLoggedInUser() {
     return this.authenticationService.getLoggedInUser();
+  }
+
+  upload() {
+
+    let files = this.fileField.getFiles();
+    let formData = new FormData();
+
+    files.forEach((file) => {
+      formData.append('document', file.rawFile);
+      formData.append('documentTypeCode', this.itemTwoObj.documentTypeCode);
+      formData.append('documentName', file.name);
+      formData.append('userId', this.itemOneObj.id);
+
+      // POST formData to Server
+      this.http.post('http://localhost:8080/api/identityDocument', formData, {
+        reportProgress: true,
+        observe: 'events'
+      })
+      .subscribe(events => {
+        if (events.type === HttpEventType.UploadProgress) {
+            console.log('Upload progress: ', Math.round(events.loaded / events.total * 100) + '%');
+        } else if (events.type === HttpEventType.Response) {
+            console.log(events);
+        }
+      });
+    });
   }
 
 }
