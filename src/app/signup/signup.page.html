@@ -1,68 +1,30 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-title text-center>Register</ion-title>
-  </ion-toolbar>
-</ion-header>
-<ion-content padding>
-  <ion-grid fixed>
-    <ion-row>
-      <ion-col class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
-        <ion-item>
-          <ion-label position="stacked">First Name
-            <span class="star">*</span>
-          </ion-label>
-          <ion-input [(ngModel)]="itemObj.firstName" placeholder="enter first name"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
-        <ion-item>
-          <ion-label position="stacked">Last Name</ion-label>
-          <ion-input [(ngModel)]="itemObj.lastName" placeholder="enter last name"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
-        <ion-item>
-          <ion-label position="stacked">Email
-            <span class="star">*</span>
-          </ion-label>
-          <ion-input [(ngModel)]="itemObj.email" (focusout)="validateEmail(itemObj.email)" placeholder="enter email address"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
-        <ion-item>
-          <ion-label position="stacked">Password
-            <span class="star">*</span>
-            <span [ngStyle]="checkpwdStrength">{{checkpwdStrength.type}}</span>
-          </ion-label>
-          <ion-input type="password" (keyup)="checkPasswordStroness()" [(ngModel)]="itemObj.password" placeholder="enter password"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
-        <ion-item>
-          <ion-label position="stacked">Confirm Password
-            <span class="star">*</span>
-          </ion-label>
-          <ion-input type="password" [(ngModel)]="itemObj.copassword" placeholder="compare password"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="2" size-xl="2">
-        <ion-button color="primary" (click)="signup()" expand="full">Sign Up</ion-button>
-        <ion-button color="medium" (click)="gotosingin()" expand="full">Back to Login</ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-content>
-<ion-tabs>
-
-  
+ 
+  <ion-content class="login-content" padding>
+    <div class="login-box">    
+      <form (ngSubmit)="register()" #registerForm="ngForm">
+        <ion-row>
+          <ion-col>
+            <ion-list inset>            
+              <ion-item [hidden]="needVerification">
+                <ion-input type="text" placeholder="Email" name="email" [(ngModel)]="email" required></ion-input>
+              </ion-item>
+              
+              <ion-item [hidden]="needVerification">
+                <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="password" required></ion-input>
+              </ion-item>        
+              
+              <ion-item [hidden]="!needVerification">
+                <ion-input type="text" placeholder="Verification code" name="verificationcode" [(ngModel)]="verificationcode"></ion-input>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+        
+        <ion-row>
+          <ion-col class="signup-col">
+            <button ion-button class="submit-btn" full type="submit">Register</button>
+          </ion-col>
+        </ion-row>      
+      </form>
+    </div>
+  </ion-content>

@@ -15,6 +15,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { ViewChild } from '@angular/core';
 import { MultiFileUploadComponent } from '../components/multi-file-upload/multi-file-upload.component';
+import { CognitoService } from '../cognito.service';
 
 
 
@@ -172,7 +173,7 @@ export class ProfilePage implements OnInit {
 
   constructor(public toastController: ToastController, private fileChooser: FileChooser, private countryService: CountryService,
     private documentService: DocumentService, private phoneService: PhoneService, private userService: UserService,
-    private authenticationService: AuthenticationService, private http: HttpClient) {
+    private authenticationService: AuthenticationService, private http: HttpClient, private cognitoService: CognitoService) {
   }
   updateBasicInfo() {
     if (this.isInvalid(this.itemOneObj.firstName) ||
@@ -264,7 +265,7 @@ export class ProfilePage implements OnInit {
 
 
   getLoggedInUser() {
-    return this.authenticationService.getLoggedInUser();
+    return this.cognitoService.getLoggedUser();
   }
 
   upload() {
