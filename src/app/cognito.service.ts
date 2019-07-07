@@ -93,17 +93,6 @@ export class CognitoService {
   }
 
   getLoggedUser() {
-    return new Promise((resolved, reject) => {
-      const cognitoUser = this._USER_POOL.getCurrentUser();
-      if (cognitoUser != null) {
-        cognitoUser.getSession(function(err, result) {
-          if (result) {
-            resolved(result.getIdToken().getJwtToken());
-          } else {
-            reject(err);
-          }
-        });
-      }
-    });
+    return sessionStorage.getItem('loggedInUser');
   }
 }

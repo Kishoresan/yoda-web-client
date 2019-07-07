@@ -26,6 +26,9 @@ export class HomePage {
     return this.authenticationService.getLoggedInUser();
   }
 
+  logout() {
+    this.authenticationService.logOut();
+  }
 
   isInvalid(field) {
     if (field == '' || field == null || field == undefined) {
