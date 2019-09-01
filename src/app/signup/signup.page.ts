@@ -25,38 +25,28 @@ export class SignupPage implements OnInit {
   ) {}
 
   register() {
-    this.cognitoService.signUp(this.email, this.password).then(
-      res => {
-        // res.user.username
-        sessionStorage.setItem('loggedInUser', res.user.username);
-        this.router.navigate(['profile']);
-        // this.promptVerificationCode();
-      },
-      err => {
-        this.presentToast(err.message, 'danger');
-      }
-    );
+
   }
 
   async promptVerificationCode() {
-    let alert =  await this.alertController.create({
+    const alert =  await this.alertController.create({
       header: 'Enter Verfication Code',
       inputs: [
         {
-          name: "VerificationCode",
-          placeholder: "Verification Code"
+          name: 'VerificationCode',
+          placeholder: 'Verification Code'
         }
       ],
       buttons: [
         {
-          text: "Cancel",
-          role: "cancel",
+          text: 'Cancel',
+          role: 'cancel',
           handler: data => {
-            console.log("Cancel clicked");
+            console.log('Cancel clicked');
           }
         },
         {
-          text: "Verify",
+          text: 'Verify',
           handler: data => {
             this.verifyUser(data.VerificationCode);
           }
@@ -67,14 +57,7 @@ export class SignupPage implements OnInit {
   }
 
   verifyUser(verificationCode) {
-    this.cognitoService.confirmUser(verificationCode, this.email).then(
-      res => {
-        this.router.navigate(['profile']);
-      },
-      err => {
-        alert(err.message);
-      }
-    );
+
   }
 
   async presentToast(message, color) {

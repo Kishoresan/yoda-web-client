@@ -31,7 +31,7 @@ export class HomePage {
   }
 
   isInvalid(field) {
-    if (field == '' || field == null || field == undefined) {
+    if (field === '' || field == null || field === undefined) {
       return true;
     }
     return false;

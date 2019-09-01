@@ -1,0 +1,15 @@
+{
+	"auth": {
+		"yodawebclientff2ad519": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": []
+		}
+	},
+	"storage": {
+		"store": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation"
+		}
+	}
+}

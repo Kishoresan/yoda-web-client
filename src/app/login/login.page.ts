@@ -3,6 +3,9 @@ import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../authentication.service';
 
+import { AmplifyAngularModule, AmplifyIonicModule, AmplifyService } from 'aws-amplify-angular';
+
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -11,9 +14,9 @@ import { AuthenticationService } from '../authentication.service';
 export class LoginPage implements OnInit {
 
   itemObj: any = {
-    email: "test@gmail.com",
-    password: "123456"
-  }
+    email: 'test@gmail.com',
+    password: '123456'
+  };
 
   constructor(public toastController: ToastController, private router: Router, private authenticationService: AuthenticationService) { }
 
@@ -34,7 +37,7 @@ export class LoginPage implements OnInit {
   signin() {
     if (this.isInvalid(this.itemObj.email) ||
       this.isInvalid(this.itemObj.password)) {
-      let msg = 'Invalid Email Or Password'
+      const msg = 'Invalid Email Or Password';
       this.presentToast(msg, 'danger');
       return false;
     } else {
@@ -55,7 +58,7 @@ export class LoginPage implements OnInit {
   }
 
   isInvalid(field) {
-    if (field == '' || field == null || field == undefined) {
+    if (field === '' || field == null || field === undefined) {
       return true;
     }
     return false;
