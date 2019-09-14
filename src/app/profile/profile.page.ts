@@ -33,54 +33,54 @@ export class ProfilePage implements OnInit {
   phoneTypeDrp: any = [];
 
   itemOneObj: any = {
-    "id": "",
-    "firstName": "",
-    "middleName": "",
-    "lastName": "",
-    "dateOfBirth": "",
-    "nationality": ""
-  }
+    'id': '',
+    'firstName': '',
+    'middleName': '',
+    'lastName': '',
+    'dateOfBirth': '',
+    'nationality': ''
+  };
 
   itemTwoObj: any = {
-    "id": "",
-    "documentTypeCode": "",
-    "fileId": ""
-  }
+    'id': '',
+    'documentTypeCode': '',
+    'fileId': ''
+  };
 
   itemThreeObj: any = {
-    "id": "",
-    "userId": "",
-    "houseNumber": "",
-    "street": "",
-    "city": "",
-    "zipCode": "",
-    "state": "",
-    "countryCode": ""
-  }
+    'id': '',
+    'userId': '',
+    'houseNumber': '',
+    'street': '',
+    'city': '',
+    'zipCode': '',
+    'state': '',
+    'countryCode': ''
+  };
 
   homeNumber: any = {
-    "id": "",
-    "userId": "",
-    "phoneType": "",
-    "countryCode": "",
-    "number": ""
-  }
+    'id': '',
+    'userId': '',
+    'phoneType': '',
+    'countryCode': '',
+    'number': ''
+  };
 
   mobileNumber: any = {
-    "id": "",
-    "userId": "",
-    "phoneType": "",
-    "countryCode": "",
-    "number": ""
-  }
+    'id': '',
+    'userId': '',
+    'phoneType': '',
+    'countryCode': '',
+    'number': ''
+  };
 
   officeNumber: any = {
-    "id": "",
-    "userId": "",
-    "phoneType": "",
-    "countryCode": "",
-    "number": ""
-  }
+    'id': '',
+    'userId': '',
+    'phoneType': '',
+    'countryCode': '',
+    'number': ''
+  };
 
   userId: any ;
 
@@ -251,7 +251,7 @@ export class ProfilePage implements OnInit {
     }
     return false;
   }
-  
+
   async presentToast(message, color) {
     const toast = await this.toastController.create({
       message: message,
@@ -270,8 +270,8 @@ export class ProfilePage implements OnInit {
 
   upload() {
 
-    let files = this.fileField.getFiles();
-    let formData = new FormData();
+    const files = this.fileField.getFiles();
+    const formData = new FormData();
 
     files.forEach((file) => {
       formData.append('document', file.rawFile);
