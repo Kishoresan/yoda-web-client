@@ -22,7 +22,10 @@ export class SignupPage implements OnInit {
     public cognitoService: CognitoService,
     public router: Router,
     public toastController: ToastController
-  ) {}
+  ) {
+
+    console.log('signup');
+  }
 
   register() {
 

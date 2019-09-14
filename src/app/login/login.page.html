@@ -1,41 +1,5 @@
-<ion-content color="primary">
-  <div class="login_frm">
-    <ion-grid fixed>
-      <ion-row>
-        <ion-col class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="4" size-xl="3">
-          <ion-item>
-            <ion-label class="white" position="stacked">Email</ion-label>
-            <ion-input class="white" [(ngModel)]="itemObj.email"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="4" size-xl="3">
-          <ion-item>
-            <ion-label class="white" position="stacked">Password</ion-label>
-            <ion-input class="white" type="password" [(ngModel)]="itemObj.password"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="4" size-xl="3">
-          <ion-button color="success" (click)="signin()" expand="full">Sign In</ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    <br/>
-    <div text-center style="cursor: pointer;" (click)="gotoSignup()">Create New Account</div>
-    <br/>
-    <div text-center>Or</div>
-    <ion-grid>
-      <ion-row style="font-size: 30px">
-        <ion-col size="6" text-right>
-          <ion-icon style="cursor: pointer;" name="logo-facebook"></ion-icon>
-        </ion-col>
-        <ion-col size="6">
-          <ion-icon style="cursor: pointer;" name="logo-google"></ion-icon>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
+Login
+
+<ion-content padding>
+	<amplify-authenticator framework="ionic" ></amplify-authenticator>
 </ion-content>
