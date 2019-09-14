@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { SignupPageModule } from './signup/signup.module';
+import { LoginPageModule } from './login/login.module';
 
 const routes: Routes = [
-  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
+  { path: 'login', loadChildren: () => LoginPageModule },
   { path: 'tabs', loadChildren: './tabs/tabs.module#TabsPageModule' },
   { path: 'signup', loadChildren: () => SignupPageModule },
   { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },

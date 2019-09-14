@@ -16,6 +16,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ViewChild } from '@angular/core';
 import { MultiFileUploadComponent } from '../components/multi-file-upload/multi-file-upload.component';
 import { CognitoService } from '../cognito.service';
+import { Auth } from 'aws-amplify';
+import { Router } from '@angular/router';
 
 
 
@@ -90,6 +92,13 @@ export class ProfilePage implements OnInit {
   isEditFour: any = false;
 
   ngOnInit() {
+      Auth.currentAuthenticatedUser({
+          bypassCache: false
+        }).then(async user => {
+          console.log(user.username);
+          console.log(user.attributes.sub);
+        })
+        .catch(err => console.log(err));
 
     this.countryService.getCountries()
       .subscribe(lists => {
@@ -173,7 +182,8 @@ export class ProfilePage implements OnInit {
 
   constructor(public toastController: ToastController, private fileChooser: FileChooser, private countryService: CountryService,
     private documentService: DocumentService, private phoneService: PhoneService, private userService: UserService,
-    private authenticationService: AuthenticationService, private http: HttpClient, private cognitoService: CognitoService) {
+    private authenticationService: AuthenticationService, private http: HttpClient, private cognitoService: CognitoService,
+    public router: Router) {
   }
   updateBasicInfo() {
     if (this.isInvalid(this.itemOneObj.firstName) ||
@@ -292,6 +302,14 @@ export class ProfilePage implements OnInit {
         }
       });
     });
+  }
+
+  logOut() {
+    Auth.signOut({ global: true })
+    .then(data => {
+      this.router.navigate(['/login']);
+    })
+    .catch(err => console.log(err));
   }
 
 }

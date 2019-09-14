@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../authentication.service';
-
 import { AmplifyAngularModule, AmplifyIonicModule, AmplifyService } from 'aws-amplify-angular';
-
+import { Auth } from 'aws-amplify';
 
 @Component({
   selector: 'app-login',
@@ -17,14 +16,20 @@ export class LoginPage implements OnInit {
     this.amplifyService = amplifyService;
     this.amplifyService.authStateChange$
       .subscribe(authState => {
-        console.log('state ' + authState.state);
         if (authState.state === 'signedIn') {
-          console.log('state 2' + authState.state);
           this.router.navigate(['profile']);
         }
       });
-}
+  }
+
   ngOnInit() {
   }
 
+  logOut() {
+    Auth.signOut({ global: true })
+    .then(data => {
+      this.router.navigate(['/login']);
+    })
+    .catch(err => console.log(err));
+  }
 }
