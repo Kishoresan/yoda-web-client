@@ -15,7 +15,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { ViewChild } from '@angular/core';
 import { MultiFileUploadComponent } from '../components/multi-file-upload/multi-file-upload.component';
-import { CognitoService } from '../cognito.service';
 import { Auth } from 'aws-amplify';
 import { Router } from '@angular/router';
 
@@ -33,6 +32,7 @@ export class ProfilePage implements OnInit {
   countryDrp: any = [];
   documentTypeDrp: any = [];
   phoneTypeDrp: any = [];
+  user: string;
 
   itemOneObj: any = {
     'id': '',
@@ -96,7 +96,7 @@ export class ProfilePage implements OnInit {
           bypassCache: false
         }).then(async user => {
           console.log(user.username);
-          console.log(user.attributes.sub);
+          this.user = user.username;
         })
         .catch(err => console.log(err));
 
@@ -182,7 +182,7 @@ export class ProfilePage implements OnInit {
 
   constructor(public toastController: ToastController, private fileChooser: FileChooser, private countryService: CountryService,
     private documentService: DocumentService, private phoneService: PhoneService, private userService: UserService,
-    private authenticationService: AuthenticationService, private http: HttpClient, private cognitoService: CognitoService,
+    private authenticationService: AuthenticationService, private http: HttpClient,
     public router: Router) {
   }
   updateBasicInfo() {
@@ -273,11 +273,6 @@ export class ProfilePage implements OnInit {
     toast.present();
   }
 
-
-  getLoggedInUser() {
-    return this.cognitoService.getLoggedUser();
-  }
-
   upload() {
 
     const files = this.fileField.getFiles();
@@ -310,6 +305,10 @@ export class ProfilePage implements OnInit {
       this.router.navigate(['/login']);
     })
     .catch(err => console.log(err));
+  }
+
+  getLoggedInUser() {
+    return this.user;
   }
 
 }
