@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { CountryService } from '../country.service';
-import { Country } from '../entity/Country';
 import { DocumentService } from '../document.service';
 import { PhoneService } from '../phone.service';
 import { UserService } from '../user.service';
@@ -17,8 +16,6 @@ import { ViewChild } from '@angular/core';
 import { MultiFileUploadComponent } from '../components/multi-file-upload/multi-file-upload.component';
 import { Auth } from 'aws-amplify';
 import { Router } from '@angular/router';
-
-
 
 @Component({
   selector: 'app-profile',
@@ -101,19 +98,15 @@ export class ProfilePage implements OnInit {
         .catch(err => console.log(err));
 
     this.countryService.getCountries()
-      .subscribe(lists => {
-        this.countryDrp  = lists;
-    });
-
-    this.documentService.getDocumentTypes()
-      .subscribe(lists => {
-        this.documentTypeDrp = lists;
-    });
+      .then(observable => observable.subscribe(countries => this.countryDrp = countries));
 
     this.phoneService.getPhoneTypes()
-      .subscribe(lists => {
-        this.phoneTypeDrp = lists;
-    });
+    .then(observable => observable.subscribe(phoneTypes => this.phoneTypeDrp = phoneTypes));
+
+    this.documentService.getDocumentTypes()
+    .subscribe(lists => {
+      this.documentTypeDrp = lists;
+  });
 
     this.documentService.getDocumentByUserName(this.getLoggedInUser())
       .subscribe(document => {
@@ -175,9 +168,6 @@ export class ProfilePage implements OnInit {
 
          }
        });
-
-
-
   }
 
   constructor(public toastController: ToastController, private fileChooser: FileChooser, private countryService: CountryService,

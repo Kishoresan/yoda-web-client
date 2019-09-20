@@ -1,19 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-
+import { Observable } from 'rxjs';
 import { PhoneType } from './entity/PhoneType';
+import { AuthenticatedHttpCaller } from './authenticatedhttpcaller.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PhoneService {
+export class PhoneService extends AuthenticatedHttpCaller<PhoneType> {
 
-  apiURL = 'http://localhost:8080/api';
+  private _servicePath = '/phoneType'
 
-  constructor(private http: HttpClient) {
-  }
-
-  getPhoneTypes() {
-    return this.http.get<PhoneType[]>(this.apiURL + '/phoneType');
+  public getPhoneTypes(): Promise <Observable<PhoneType[]>>{
+    return super.getAll(this._servicePath);
   }
 }

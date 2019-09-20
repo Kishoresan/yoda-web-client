@@ -184,7 +184,7 @@ Profile
                   <ion-label position="stacked">Country
                   </ion-label>
                   <ion-select  [(ngModel)]="itemThreeObj.countryCode" placeholder="select country" interface="popover">
-                    <ion-select-option *ngFor="let country of countryDrp"  value="{{country.id}}">{{country.countryNiceName}}</ion-select-option>
+                    <ion-select-option *ngFor="let country of countryDrp"  value="{{country.id}}">{{country.countryName}}</ion-select-option>
                   </ion-select>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditThree">

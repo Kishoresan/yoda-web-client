@@ -1,21 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { Country } from '../app/entity/Country';
+import { AuthenticatedHttpCaller } from './authenticatedhttpcaller.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CountryService {
+export class CountryService extends AuthenticatedHttpCaller<Country> {
 
-  apiURL = 'http://localhost:8080/api';
+  private _servicePath = '/country'
 
-  constructor(private http: HttpClient) {
+  public getCountries(): Promise <Observable<Country[]>>{
+    return super.getAll(this._servicePath);
   }
-
-  getCountries() {
-    return this.http.get<Country[]>(this.apiURL + '/country');
-  }
-
 }
