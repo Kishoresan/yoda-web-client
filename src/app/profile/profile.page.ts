@@ -4,7 +4,7 @@ import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { CountryService } from '../country.service';
 import { DocumentTypeService } from '../document.service';
 import { PhoneService } from '../phone.service';
-import { UserService } from '../user.service';
+import { UserService, AddressService, PhoneNumberService } from '../user.service';
 import { User } from '../entity/User';
 import { AuthenticationService } from '../authentication.service';
 
@@ -16,6 +16,7 @@ import { ViewChild } from '@angular/core';
 import { MultiFileUploadComponent } from '../components/multi-file-upload/multi-file-upload.component';
 import { Auth } from 'aws-amplify';
 import { Router } from '@angular/router';
+import { observable } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -26,10 +27,10 @@ export class ProfilePage implements OnInit {
 
   @ViewChild(MultiFileUploadComponent) fileField: MultiFileUploadComponent;
 
-  countryDrp: any = [];
+  countries: any = [];
   documentTypeDrp: any = [];
   phoneTypeDrp: any = [];
-  user: string;
+  userEmail: string;
 
   itemOneObj: any = {
     'id': '',
@@ -92,21 +93,21 @@ export class ProfilePage implements OnInit {
       Auth.currentAuthenticatedUser({
           bypassCache: false
         }).then(async user => {
-          console.log(user.username);
-          this.user = user.username;
+          this.userEmail = user.attributes.email;
         })
         .catch(err => console.log(err));
 
-    this.countryService.getAll()
-      .then(observable => observable.subscribe(countries => this.countryDrp = countries));
 
-    this.phoneService.getAll()
+    this.countryService.getAll()
+      .then(obs => obs.subscribe(countries => this.countries = countries));
+
+    /* this.phoneService.getAll()
       .then(observable => observable.subscribe(phoneTypes => this.phoneTypeDrp = phoneTypes));
 
     this.documentTypeService.getAll()
       .then(observable => observable.subscribe(documentTypes => this.documentTypeDrp = documentTypes));
 
-    this.documentService.getDocumentByUserName(this.getLoggedInUser())
+    /* this.documentService.getDocumentByUserName(this.getLoggedInUser())
       .subscribe(document => {
        this.itemTwoObj.id = document[0].id;
        this.itemTwoObj.documentTypeCode = document[0].documentTypeCode;
@@ -115,18 +116,20 @@ export class ProfilePage implements OnInit {
 
 
     this.userService.getUserByEmail(this.getLoggedInUser())
-      .subscribe(user => {
-        this.itemOneObj.firstName = user.firstName;
-        this.itemOneObj.middleName = user.middleName;
-        this.itemOneObj.lastName = user.lastName;
-        this.itemOneObj.dateOfBirth = user.dateOfBirth;
-        this.itemOneObj.nationality = user.nationality;
-        this.itemOneObj.id = user.id;
-        this.itemOneObj.email = user.email;
-      });
+      .then(observable => observable.subscribe(
+        user => {
+          this.itemOneObj.firstName = user.firstName;
+          this.itemOneObj.middleName = user.middleName;
+          this.itemOneObj.lastName = user.lastName;
+          this.itemOneObj.dateOfBirth = user.dateOfBirth;
+          this.itemOneObj.nationality = user.nationality;
+          this.itemOneObj.id = user.id;
+          this.itemOneObj.email = user.email;
+    }));
 
-    this.userService.getUserAddress(this.getLoggedInUser())
-      .subscribe(address => {
+    this.addressService.getByEmailId(this.getLoggedInUser())
+    .then(observable => observable.subscribe(
+       address => {
         this.itemThreeObj.id = address.id;
         this.itemThreeObj.userId = this.userId;
         this.itemThreeObj.houseNumber = address.houseNumber;
@@ -135,10 +138,11 @@ export class ProfilePage implements OnInit {
         this.itemThreeObj.zipCode = address.zipcode;
         this.itemThreeObj.state = address.state;
         this.itemThreeObj.countryCode = address.countryCode;
-      });
+      }));
 
-      this.userService.getPhoneNumber(this.getLoggedInUser())
-       .subscribe(phoneNumber => {
+      this.phoneNumberService.getByEmailId(this.getLoggedInUser())
+      .then(observable => observable.subscribe(
+       phoneNumber => {
          for (let i = 0; i < phoneNumber.length; i++) {
           if (phoneNumber[i].phoneType === 1) {
             this.mobileNumber.id = phoneNumber[i].id;
@@ -165,11 +169,13 @@ export class ProfilePage implements OnInit {
           }
 
          }
-       });
+       })); */
   }
 
   constructor(public toastController: ToastController, private fileChooser: FileChooser, private countryService: CountryService,
-    private documentTypeService: DocumentTypeService, private phoneService: PhoneService, private userService: UserService,
+    private documentTypeService: DocumentTypeService, private phoneService: PhoneService,
+    private phoneNumberService: PhoneNumberService, private userService: UserService,
+    private addressService: AddressService,
     private authenticationService: AuthenticationService, private http: HttpClient,
     public router: Router) {
   }
@@ -183,7 +189,7 @@ export class ProfilePage implements OnInit {
       return false;
     } else {
       const msg = 'Save Success';
-      this.userService.updateUser(this.itemOneObj);
+      this.userService.update(this.itemOneObj);
       this.presentToast(msg, 'success');
       this.isEditOne = false;
     }
@@ -211,7 +217,7 @@ export class ProfilePage implements OnInit {
       return false;
     } else {
       const msg = 'Save Success';
-      this.userService.saveOrUpdateUserAddress(this.itemOneObj.id , this.itemThreeObj);
+      this.addressService.update(this.itemThreeObj);
       this.presentToast(msg, 'success');
       this.isEditThree = false;
     }
@@ -223,9 +229,9 @@ export class ProfilePage implements OnInit {
       return false;
     } else {
       const msg = 'Save Success.';
-      this.userService.saveOrUpdatePhoneNumber(this.itemOneObj.id, this.mobileNumber, 1);
-      this.userService.saveOrUpdatePhoneNumber(this.itemOneObj.id, this.homeNumber, 2);
-      this.userService.saveOrUpdatePhoneNumber(this.itemOneObj.id, this.officeNumber, 3);
+      this.phoneNumberService.saveAll(this.mobileNumber);
+      // this.phoneNumberService.update(this.homeNumber, 2);
+      // this.phoneNumberService.update(this.officeNumber, 3);
       this.presentToast(msg, 'success');
       this.isEditFour = false;
     }
@@ -296,7 +302,7 @@ export class ProfilePage implements OnInit {
   }
 
   getLoggedInUser() {
-    return this.user;
+    return this.userEmail;
   }
 
 }

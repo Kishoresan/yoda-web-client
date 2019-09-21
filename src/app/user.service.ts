@@ -8,11 +8,11 @@ import { PhoneNumber } from './entity/PhoneNumber';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService extends AuthenticatedHttpCaller <User>{
+export class UserService extends AuthenticatedHttpCaller <User> {
 
-  private _servicePath = '/user'
+  private _servicePath = '/user';
 
-  public getUserByEmail(_email: string) : Promise<Observable<User>> {
+  public getUserByEmail(_email: string): Promise<Observable<User>> {
     return super._get(this._servicePath + '/email/' + _email);
   }
 
@@ -30,7 +30,7 @@ export class UserService extends AuthenticatedHttpCaller <User>{
 })
 export class AddressService extends AuthenticatedHttpCaller<Address> {
 
-  private _servicePath = '/userAddress'
+  private _servicePath = '/userAddress';
 
   public getByUserId(_userId: string): Promise<Observable<Address>> {
     return this._get(this._servicePath + '/userId/' + _userId);
@@ -54,14 +54,18 @@ export class AddressService extends AuthenticatedHttpCaller<Address> {
 })
 export class PhoneNumberService extends AuthenticatedHttpCaller<PhoneNumber> {
 
-  private _servicePath = '/phoneNumber'
+  private _servicePath = '/phoneNumber';
 
   public getByUserId(_userId: string): Promise<Observable<PhoneNumber>> {
     return this._get(this._servicePath + '/userId/' + _userId);
   }
 
-  public save(_phoneNumber: PhoneNumber) {
-    return super._save(this._servicePath, _phoneNumber);
+  public getByEmailId(_email: string): Promise<Observable<PhoneNumber[]>> {
+    return this._getAll(this._servicePath + '/email/' + _email);
+  }
+
+  public saveAll(_phoneNumbers: PhoneNumber[]) {
+    return super._saveAll(this._servicePath, _phoneNumbers);
   }
 
   public update(_phoneNumber: PhoneNumber) {

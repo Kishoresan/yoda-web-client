@@ -8,9 +8,9 @@ import { AuthenticatedHttpCaller } from './authenticatedhttpcaller.service';
 })
 export class CountryService extends AuthenticatedHttpCaller<Country> {
 
-  private _servicePath = '/country'
+  private _servicePath = '/country';
 
-  public getAll(): Promise <Observable<Country[]>>{
+  public getAll(): Promise <Observable<Country[]>> {
     return super._getAll(this._servicePath);
   }
 }

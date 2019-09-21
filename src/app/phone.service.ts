@@ -8,9 +8,9 @@ import { AuthenticatedHttpCaller } from './authenticatedhttpcaller.service';
 })
 export class PhoneService extends AuthenticatedHttpCaller<PhoneType> {
 
-  private _servicePath = '/phoneType'
+  private _servicePath = '/phoneType';
 
-  public getAll(): Promise <Observable<PhoneType[]>>{
+  public getAll(): Promise <Observable<PhoneType[]>> {
     return super._getAll(this._servicePath);
   }
 }

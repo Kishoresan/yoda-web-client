@@ -31,6 +31,14 @@ import { Auth } from 'aws-amplify';
       );
     }
 
+    protected async _saveAll(_servicePath: string, _t: T[]) {
+      const _httpOptions = await this._getHttpOptions();
+      return this._http.post<T[]>(this.apiURL + _servicePath, _t, _httpOptions).subscribe(
+        (res) => console.log(res),
+        (err) => console.log(err)
+      );
+    }
+
     protected async _update(_servicePath: string, _t: T) {
       const _httpOptions = await this._getHttpOptions();
       return this._http.put<T>(this.apiURL + _servicePath, _t, _httpOptions).subscribe(
@@ -41,9 +49,9 @@ import { Auth } from 'aws-amplify';
 
     private async _getHttpOptions() {
 
-      var _token = undefined;
+      let _token;
 
-      await Auth.currentAuthenticatedUser().then(function (user){
+      await Auth.currentAuthenticatedUser().then(function (user) {
         _token = user.signInUserSession.idToken.jwtToken;
       });
 

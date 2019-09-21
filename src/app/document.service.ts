@@ -6,9 +6,9 @@ import { AuthenticatedHttpCaller } from './authenticatedhttpcaller.service';
 @Injectable({
   providedIn: 'root'
 })
-export class DocumentTypeService extends AuthenticatedHttpCaller<DocumentType>{
+export class DocumentTypeService extends AuthenticatedHttpCaller<DocumentType> {
 
-  private _servicePath = '/documentType'
+  private _servicePath = '/documentType';
 
   public getAll(): Promise <Observable<DocumentType[]>> {
     return super._getAll(this._servicePath);
