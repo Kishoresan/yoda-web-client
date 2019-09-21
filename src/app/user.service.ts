@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
+import { AuthenticatedHttpCaller } from './authenticatedhttpcaller.service';
 import { User } from './entity/User';
 import { Address } from './entity/Address';
 import { PhoneNumber } from './entity/PhoneNumber';
@@ -9,62 +8,63 @@ import { PhoneNumber } from './entity/PhoneNumber';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserService extends AuthenticatedHttpCaller <User>{
 
-  apiURL = 'http://localhost:8080/api';
+  private _servicePath = '/user'
 
-  constructor(private http: HttpClient) {
+  public getUserByEmail(_email: string) : Promise<Observable<User>> {
+    return super._get(this._servicePath + '/email/' + _email);
   }
 
-  getPhoneTypes() {
-    return this.http.get<User[]>(this.apiURL + '/user');
+  public save(_user: User) {
+    return super._save(this._servicePath, _user);
   }
 
-  saveUser(user) {
-    return this.http.post<User>(this.apiURL + '/user', user).subscribe(
-      (res) => console.log(res),
-      (err) => console.log(err)
-    );
+  public update(_user: User) {
+    return super._update(this._servicePath, _user);
+  }
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AddressService extends AuthenticatedHttpCaller<Address> {
+
+  private _servicePath = '/userAddress'
+
+  public getByUserId(_userId: string): Promise<Observable<Address>> {
+    return this._get(this._servicePath + '/userId/' + _userId);
   }
 
-  getUserByEmail(username) {
-    return this.http.get<User>(this.apiURL + '/user/email/' + username);
+  public getByEmailId(_email: string): Promise<Observable<Address>> {
+    return this._get(this._servicePath + '/email/' + _email);
   }
 
-  updateUser(user) {
-    return this.http.put<User>(this.apiURL + '/user', user).subscribe(
-      (res) => console.log(res),
-      (err) => console.log(err)
-    );
+  public save(_address: Address) {
+    return super._save(this._servicePath, _address);
   }
 
-  getUserAddress(username) {
-     return this.http.get<Address>(this.apiURL + '/userAddress/userName/' + username);
+  public update(_address: Address) {
+    return super._update(this._servicePath, _address);
+  }
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class PhoneNumberService extends AuthenticatedHttpCaller<PhoneNumber> {
+
+  private _servicePath = '/phoneNumber'
+
+  public getByUserId(_userId: string): Promise<Observable<PhoneNumber>> {
+    return this._get(this._servicePath + '/userId/' + _userId);
   }
 
-  saveOrUpdateUserAddress(userId, address) {
-    address.userId = userId;
-
-    return this.http.put<Address>(this.apiURL + '/userAddress/', address).subscribe(
-      (res) => console.log(res),
-      (err) => console.log(err)
-    );
+  public save(_phoneNumber: PhoneNumber) {
+    return super._save(this._servicePath, _phoneNumber);
   }
 
-  getPhoneNumber(username) {
-    return this.http.get<PhoneNumber[]>(this.apiURL + '/phoneNumber/userName/' + username);
+  public update(_phoneNumber: PhoneNumber) {
+    return super._update(this._servicePath, _phoneNumber);
   }
-
- saveOrUpdatePhoneNumber(userId, phoneNumber, phoneType) {
-  phoneNumber.userId = userId;
-  phoneNumber.phoneType = phoneType;
-  phoneNumber.countryCode = 1;
-
-    return this.http.put<PhoneNumber>(this.apiURL + '/phoneNumber/', phoneNumber).subscribe(
-      (res) => console.log(res),
-      (err) => console.log(err)
-    );
-  }
-
-
 }

@@ -1,24 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { DocumentType } from './entity/DocumentType';
-import { IdentityDocument } from './entity/IdentityDocument';
+import { AuthenticatedHttpCaller } from './authenticatedhttpcaller.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DocumentService {
+export class DocumentTypeService extends AuthenticatedHttpCaller<DocumentType>{
 
-  apiURL = 'http://localhost:8080/api';
+  private _servicePath = '/documentType'
 
-  constructor(private http: HttpClient) {
+  public getAll(): Promise <Observable<DocumentType[]>> {
+    return super._getAll(this._servicePath);
   }
-
-  getDocumentTypes() {
-    return this.http.get<DocumentType[]>(this.apiURL + '/documentType');
-  }
-
-  getDocumentByUserName(userName) {
-    return this.http.get<IdentityDocument>(this.apiURL + '/identityDocument/userName/' + userName);
-  }
-
 }

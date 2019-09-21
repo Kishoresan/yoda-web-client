@@ -10,7 +10,7 @@ export class PhoneService extends AuthenticatedHttpCaller<PhoneType> {
 
   private _servicePath = '/phoneType'
 
-  public getPhoneTypes(): Promise <Observable<PhoneType[]>>{
-    return super.getAll(this._servicePath);
+  public getAll(): Promise <Observable<PhoneType[]>>{
+    return super._getAll(this._servicePath);
   }
 }

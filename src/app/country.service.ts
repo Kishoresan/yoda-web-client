@@ -10,7 +10,7 @@ export class CountryService extends AuthenticatedHttpCaller<Country> {
 
   private _servicePath = '/country'
 
-  public getCountries(): Promise <Observable<Country[]>>{
-    return super.getAll(this._servicePath);
+  public getAll(): Promise <Observable<Country[]>>{
+    return super._getAll(this._servicePath);
   }
 }

@@ -13,7 +13,33 @@ import { Auth } from 'aws-amplify';
     constructor(protected _http: HttpClient) {
     }
 
-    protected async getAll(_servicePath: string): Promise <Observable<T[]>> {
+    protected async _getAll(_servicePath: string): Promise <Observable<T[]>> {
+      const _httpOptions = await this._getHttpOptions();
+      return this._http.get(this.apiURL + _servicePath, _httpOptions) as Observable<T[]>;
+    }
+
+    protected async _get(_servicePath: string): Promise <Observable<T>> {
+      const _httpOptions = await this._getHttpOptions();
+      return this._http.get(this.apiURL + _servicePath, _httpOptions) as Observable<T>;
+    }
+
+    protected async _save(_servicePath: string, _t: T) {
+      const _httpOptions = await this._getHttpOptions();
+      return this._http.post<T>(this.apiURL + _servicePath, _t, _httpOptions).subscribe(
+        (res) => console.log(res),
+        (err) => console.log(err)
+      );
+    }
+
+    protected async _update(_servicePath: string, _t: T) {
+      const _httpOptions = await this._getHttpOptions();
+      return this._http.put<T>(this.apiURL + _servicePath, _t, _httpOptions).subscribe(
+        (res) => console.log(res),
+        (err) => console.log(err)
+      );
+    }
+
+    private async _getHttpOptions() {
 
       var _token = undefined;
 
@@ -21,12 +47,10 @@ import { Auth } from 'aws-amplify';
         _token = user.signInUserSession.idToken.jwtToken;
       });
 
-      const _httpOptions = {
+      return  {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + _token
         })
       };
-
-      return this._http.get(this.apiURL + _servicePath, _httpOptions) as Observable<T[]>;
     }
   }

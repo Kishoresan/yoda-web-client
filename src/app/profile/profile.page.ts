@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { CountryService } from '../country.service';
-import { DocumentService } from '../document.service';
+import { DocumentTypeService } from '../document.service';
 import { PhoneService } from '../phone.service';
 import { UserService } from '../user.service';
 import { User } from '../entity/User';
@@ -97,16 +97,14 @@ export class ProfilePage implements OnInit {
         })
         .catch(err => console.log(err));
 
-    this.countryService.getCountries()
+    this.countryService.getAll()
       .then(observable => observable.subscribe(countries => this.countryDrp = countries));
 
-    this.phoneService.getPhoneTypes()
-    .then(observable => observable.subscribe(phoneTypes => this.phoneTypeDrp = phoneTypes));
+    this.phoneService.getAll()
+      .then(observable => observable.subscribe(phoneTypes => this.phoneTypeDrp = phoneTypes));
 
-    this.documentService.getDocumentTypes()
-    .subscribe(lists => {
-      this.documentTypeDrp = lists;
-  });
+    this.documentTypeService.getAll()
+      .then(observable => observable.subscribe(documentTypes => this.documentTypeDrp = documentTypes));
 
     this.documentService.getDocumentByUserName(this.getLoggedInUser())
       .subscribe(document => {
@@ -171,7 +169,7 @@ export class ProfilePage implements OnInit {
   }
 
   constructor(public toastController: ToastController, private fileChooser: FileChooser, private countryService: CountryService,
-    private documentService: DocumentService, private phoneService: PhoneService, private userService: UserService,
+    private documentTypeService: DocumentTypeService, private phoneService: PhoneService, private userService: UserService,
     private authenticationService: AuthenticationService, private http: HttpClient,
     public router: Router) {
   }
