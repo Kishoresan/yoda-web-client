@@ -62,15 +62,15 @@ export class ProfilePage implements OnInit {
   homeNumber: any = {
     'id': '',
     'userId': '',
-    'phoneType': '',
+    'phoneType': 2,
     'countryCode': '',
-    'number': ''
+    'number': '',
   };
 
   mobileNumber: any = {
     'id': '',
     'userId': '',
-    'phoneType': '',
+    'phoneType': 1,
     'countryCode': '',
     'number': ''
   };
@@ -78,7 +78,7 @@ export class ProfilePage implements OnInit {
   officeNumber: any = {
     'id': '',
     'userId': '',
-    'phoneType': '',
+    'phoneType': 3,
     'countryCode': '',
     'number': ''
   };
@@ -152,35 +152,32 @@ export class ProfilePage implements OnInit {
           }
         }));
 
-    this.phoneNumberService.find()
+    this.phoneNumberService.findAll()
       .then(obs => obs.subscribe(
         phoneNumbers => {
-        /* for (let i = 0; i < phoneNumbers.length; i++) {
-          if (phoneNumbers[i].phoneType === 1) {
-            this.mobileNumber.id = phoneNumbers[i].id;
-            this.mobileNumber.userId = phoneNumbers[i].userId;
-            this.mobileNumber.phoneType = phoneNumbers[i].phoneType;
-            this.mobileNumber.countryCode = phoneNumbers[i].countryCode;
-            this.mobileNumber.number = phoneNumbers[i].number;
-          }
-
-          if (phoneNumber[i].phoneType === 2) {
-            this.homeNumber.id = phoneNumber[i].id;
-            this.homeNumber.userId = phoneNumber[i].userId;
-            this.homeNumber.phoneType = phoneNumber[i].phoneType;
-            this.homeNumber.countryCode = phoneNumber[i].countryCode;
-            this.homeNumber.number = phoneNumber[i].number;
-          }
-
-          if (phoneNumber[i].phoneType === 3) {
-            this.officeNumber.id = phoneNumber[i].id;
-            this.officeNumber.userId = phoneNumber[i].userId;
-            this.officeNumber.phoneType = phoneNumber[i].phoneType;
-            this.officeNumber.countryCode = phoneNumber[i].countryCode;
-            this.officeNumber.number = phoneNumber[i].number;
-          }
-
-         }*/
+          phoneNumbers.forEach(phoneNumber => {
+            if (phoneNumber.phoneType === 1) {
+              this.mobileNumber.id = phoneNumber.id;
+              this.mobileNumber.userId = phoneNumber.userId;
+              this.mobileNumber.phoneType = phoneNumber.phoneType;
+              this.mobileNumber.countryCode = phoneNumber.countryCode;
+              this.mobileNumber.number = phoneNumber.number;
+            }
+            if (phoneNumber.phoneType === 2) {
+              this.homeNumber.id = phoneNumber.id;
+              this.homeNumber.userId = phoneNumber.userId;
+              this.homeNumber.phoneType = phoneNumber.phoneType;
+              this.homeNumber.countryCode = phoneNumber.countryCode;
+              this.homeNumber.number = phoneNumber.number;
+            }
+            if (phoneNumber.phoneType === 3) {
+              this.officeNumber.id = phoneNumber.id;
+              this.officeNumber.userId = phoneNumber.userId;
+              this.officeNumber.phoneType = phoneNumber.phoneType;
+              this.officeNumber.countryCode = phoneNumber.countryCode;
+              this.officeNumber.number = phoneNumber.number;
+            }
+          });
        }));
   }
 
@@ -241,11 +238,14 @@ export class ProfilePage implements OnInit {
       return false;
     } else {
       const msg = 'Save Success.';
-      const phoneNumbers: Array<PhoneNumber> = [this.mobileNumber];
+      this.homeNumber.userId = this.userId;
+      this.phoneNumberService.update(this.homeNumber);
 
-      this.phoneNumberService.saveAll(phoneNumbers);
-      // this.phoneNumberService.update(this.homeNumber, 2);
-      // this.phoneNumberService.update(this.officeNumber, 3);
+      this.mobileNumber.userId = this.userId;
+      this.phoneNumberService.update(this.mobileNumber);
+
+      this.officeNumber.userId = this.userId;
+      this.phoneNumberService.update(this.officeNumber);
       this.presentToast(msg, 'success');
       this.isEditFour = false;
     }

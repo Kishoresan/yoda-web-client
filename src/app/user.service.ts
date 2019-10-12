@@ -56,6 +56,10 @@ export class PhoneNumberService extends AuthenticatedHttpCaller<PhoneNumber> {
     return super._get(this._servicePath);
   }
 
+  public findAll(): Promise<Observable<PhoneNumber[]>> {
+    return super._getAll(this._servicePath);
+  }
+
   public saveAll(_phoneNumbers: PhoneNumber[]) {
     return super._saveAll(this._servicePath, _phoneNumbers);
   }
