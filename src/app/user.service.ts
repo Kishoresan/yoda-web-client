@@ -12,8 +12,8 @@ export class UserService extends AuthenticatedHttpCaller <User> {
 
   private _servicePath = '/user';
 
-  public getUserByEmail(_email: string): Promise<Observable<User>> {
-    return super._get(this._servicePath + '/email/' + _email);
+  public find(): Promise<Observable<User>> {
+    return super._get(this._servicePath);
   }
 
   public save(_user: User) {
@@ -32,12 +32,8 @@ export class AddressService extends AuthenticatedHttpCaller<Address> {
 
   private _servicePath = '/userAddress';
 
-  public getByUserId(_userId: string): Promise<Observable<Address>> {
-    return this._get(this._servicePath + '/userId/' + _userId);
-  }
-
-  public getByEmailId(_email: string): Promise<Observable<Address>> {
-    return this._get(this._servicePath + '/email/' + _email);
+  public find(): Promise<Observable<Address>> {
+    return super._get(this._servicePath);
   }
 
   public save(_address: Address) {

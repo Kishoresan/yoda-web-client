@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../authentication.service';
 
 @Component({
   selector: 'app-settings',
@@ -8,13 +7,9 @@ import { AuthenticationService } from '../authentication.service';
 })
 export class SettingsPage implements OnInit {
 
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor() { }
 
   ngOnInit() {
-  }
-
-  getLoggedInUser() {
-    return this.authenticationService.getLoggedInUser();
   }
 
 }

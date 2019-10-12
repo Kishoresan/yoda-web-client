@@ -6,7 +6,6 @@ import { DocumentTypeService } from '../document.service';
 import { PhoneService } from '../phone.service';
 import { UserService, AddressService, PhoneNumberService } from '../user.service';
 import { User } from '../entity/User';
-import { AuthenticationService } from '../authentication.service';
 
 import { HttpClient,  HttpEventType  } from '@angular/common/http';
 
@@ -28,11 +27,11 @@ export class ProfilePage implements OnInit {
   @ViewChild(MultiFileUploadComponent) fileField: MultiFileUploadComponent;
 
   countries: any = [];
-  documentTypeDrp: any = [];
-  phoneTypeDrp: any = [];
+  documentTypes: any = [];
+  phoneTypes: any = [];
   userEmail: string;
 
-  itemOneObj: any = {
+  basicDetails: any = {
     'id': '',
     'firstName': '',
     'middleName': '',
@@ -47,7 +46,7 @@ export class ProfilePage implements OnInit {
     'fileId': ''
   };
 
-  itemThreeObj: any = {
+  addressDetails: any = {
     'id': '',
     'userId': '',
     'houseNumber': '',
@@ -89,57 +88,68 @@ export class ProfilePage implements OnInit {
   isEditThree: any = false;
   isEditFour: any = false;
 
+  user: any = {
+    'id': '',
+    'email': '',
+    'firstName': '',
+    'middleName': '',
+    'lastName': '',
+    'dateOfBirth': '',
+    'nationality': ''
+  };
+
   ngOnInit() {
       Auth.currentAuthenticatedUser({
-          bypassCache: false
-        }).then(async user => {
-          this.userEmail = user.attributes.email;
-        })
-        .catch(err => console.log(err));
+        bypassCache: false
+      }).then(async user => {
+        this.userEmail = user.attributes.email;
+        this.userId = user.attributes.sub;
+      }).catch(err => console.log(err));
 
 
-    this.countryService.getAll()
+     this.countryService.getAll()
       .then(obs => obs.subscribe(countries => this.countries = countries));
 
-    /* this.phoneService.getAll()
-      .then(observable => observable.subscribe(phoneTypes => this.phoneTypeDrp = phoneTypes));
+     this.phoneService.getAll()
+      .then(obs => obs.subscribe(phoneTypes => this.phoneTypes = phoneTypes));
 
-    this.documentTypeService.getAll()
-      .then(observable => observable.subscribe(documentTypes => this.documentTypeDrp = documentTypes));
+     this.documentTypeService.getAll()
+      .then(obs => obs.subscribe(documentTypes => this.documentTypes = documentTypes));
 
-    /* this.documentService.getDocumentByUserName(this.getLoggedInUser())
+   /*  this.documentService.getDocumentByUserName(this.getLoggedInUser())
       .subscribe(document => {
        this.itemTwoObj.id = document[0].id;
        this.itemTwoObj.documentTypeCode = document[0].documentTypeCode;
        this.itemTwoObj.fileId = document[0].mediaFileId;
-    });
+    }); */
 
-
-    this.userService.getUserByEmail(this.getLoggedInUser())
-      .then(observable => observable.subscribe(
+    this.userService.find()
+      .then(obs => obs.subscribe(
         user => {
-          this.itemOneObj.firstName = user.firstName;
-          this.itemOneObj.middleName = user.middleName;
-          this.itemOneObj.lastName = user.lastName;
-          this.itemOneObj.dateOfBirth = user.dateOfBirth;
-          this.itemOneObj.nationality = user.nationality;
-          this.itemOneObj.id = user.id;
-          this.itemOneObj.email = user.email;
+          this.basicDetails.firstName = user.firstName;
+          this.basicDetails.middleName = user.middleName;
+          this.basicDetails.lastName = user.lastName;
+          this.basicDetails.dateOfBirth = user.dateOfBirth;
+          this.basicDetails.nationality = user.nationality;
+          this.basicDetails.id = user.id;
+          this.basicDetails.email = user.email;
     }));
 
-    this.addressService.getByEmailId(this.getLoggedInUser())
-    .then(observable => observable.subscribe(
-       address => {
-        this.itemThreeObj.id = address.id;
-        this.itemThreeObj.userId = this.userId;
-        this.itemThreeObj.houseNumber = address.houseNumber;
-        this.itemThreeObj.street = address.street;
-        this.itemThreeObj.city = address.city;
-        this.itemThreeObj.zipCode = address.zipcode;
-        this.itemThreeObj.state = address.state;
-        this.itemThreeObj.countryCode = address.countryCode;
-      }));
-
+    this.addressService.find()
+      .then(obs => obs.subscribe(
+        address => {
+          if (address !== null) {
+            this.addressDetails.id = address.id;
+            this.addressDetails.userId = this.userId;
+            this.addressDetails.houseNumber = address.houseNumber;
+            this.addressDetails.street = address.street;
+            this.addressDetails.city = address.city;
+            this.addressDetails.zipCode = address.zipcode;
+            this.addressDetails.state = address.state;
+            this.addressDetails.countryCode = address.countryCode;
+          }
+        }));
+ /*
       this.phoneNumberService.getByEmailId(this.getLoggedInUser())
       .then(observable => observable.subscribe(
        phoneNumber => {
@@ -175,21 +185,20 @@ export class ProfilePage implements OnInit {
   constructor(public toastController: ToastController, private fileChooser: FileChooser, private countryService: CountryService,
     private documentTypeService: DocumentTypeService, private phoneService: PhoneService,
     private phoneNumberService: PhoneNumberService, private userService: UserService,
-    private addressService: AddressService,
-    private authenticationService: AuthenticationService, private http: HttpClient,
+    private addressService: AddressService, private http: HttpClient,
     public router: Router) {
   }
   updateBasicInfo() {
-    if (this.isInvalid(this.itemOneObj.firstName) ||
-      this.isInvalid(this.itemOneObj.lastName) ||
-      this.isInvalid(this.itemOneObj.middleName) ||
-      this.isInvalid(this.itemOneObj.dateOfBirth)) {
+    if (this.isInvalid(this.basicDetails.firstName) ||
+      this.isInvalid(this.basicDetails.lastName) ||
+      this.isInvalid(this.basicDetails.middleName) ||
+      this.isInvalid(this.basicDetails.dateOfBirth)) {
       const msg = 'Please fill in the required information.';
       this.presentToast(msg, 'danger');
       return false;
     } else {
       const msg = 'Save Success';
-      this.userService.update(this.itemOneObj);
+      this.userService.update(this.basicDetails);
       this.presentToast(msg, 'success');
       this.isEditOne = false;
     }
@@ -207,17 +216,18 @@ export class ProfilePage implements OnInit {
     }
   }
   updateAddress() {
-    if (this.isInvalid(this.itemThreeObj.houseNumber) ||
-      this.isInvalid(this.itemThreeObj.street) ||
-      this.isInvalid(this.itemThreeObj.city) ||
-      this.isInvalid(this.itemThreeObj.zipCode) ||
-      this.isInvalid(this.itemThreeObj.state)) {
+    if (this.isInvalid(this.addressDetails.houseNumber) ||
+      this.isInvalid(this.addressDetails.street) ||
+      this.isInvalid(this.addressDetails.city) ||
+      this.isInvalid(this.addressDetails.zipCode) ||
+      this.isInvalid(this.addressDetails.state)) {
       const msg = 'Fill In the Required Information.';
       this.presentToast(msg, 'danger');
       return false;
     } else {
       const msg = 'Save Success';
-      this.addressService.update(this.itemThreeObj);
+      this.addressDetails.userId = this.userId;
+      this.addressService.update(this.addressDetails);
       this.presentToast(msg, 'success');
       this.isEditThree = false;
     }
@@ -276,7 +286,7 @@ export class ProfilePage implements OnInit {
       formData.append('document', file.rawFile);
       formData.append('documentTypeCode', this.itemTwoObj.documentTypeCode);
       formData.append('documentName', file.name);
-      formData.append('userId', this.itemOneObj.id);
+      formData.append('userId', this.basicDetails.id);
 
       // POST formData to Server
       this.http.post('http://localhost:8080/api/identityDocument', formData, {
@@ -304,5 +314,4 @@ export class ProfilePage implements OnInit {
   getLoggedInUser() {
     return this.userEmail;
   }
-
 }

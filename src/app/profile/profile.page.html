@@ -1,19 +1,11 @@
-Profile
-
-
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      <img alt="logo" height="40" src="assets/image/logo.png">
-    </ion-title>
-    <ion-label style="font-size: 20px;margin-right: 8px;" slot="end">
-      {{getLoggedInUser()}}
-    </ion-label>
-    <ion-icon style="font-size: 30px;margin-right: 8px;" slot="end" name="notifications"></ion-icon>
-    <ion-icon style="font-size: 30px;margin-right: 8px;" slot="end" name="log-out" (click)="logOut()"></ion-icon>
-  </ion-toolbar>
-</ion-header>
 <ion-content padding>
+    <ion-toolbar>
+        <ion-label style="font-size: 20px;margin-right: 8px;" slot="end">
+          {{getLoggedInUser()}}
+        </ion-label>
+        <ion-icon style="font-size: 30px;margin-right: 8px;" slot="end" name="notifications"></ion-icon>
+        <ion-icon style="font-size: 30px;margin-right: 8px;" slot="end" name="log-out" (click)="logOut()"></ion-icon>
+    </ion-toolbar>
   <ion-grid fixed>
     <ion-row>
       <ion-col class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
@@ -29,57 +21,57 @@ Profile
               <ion-col class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
                 <ion-item *ngIf="isEditOne">
                   <ion-label position="stacked">First Name</ion-label>
-                  <ion-input  [(ngModel)]="itemOneObj.firstName" placeholder="enter first name"></ion-input>
+                  <ion-input  [(ngModel)]="basicDetails.firstName" placeholder="enter first name"></ion-input>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditOne">
-                  First Name:&nbsp;{{itemOneObj.firstName}}
+                  First Name:&nbsp;{{basicDetails.firstName}}
                 </ion-label>
               </ion-col>
               <ion-col class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
                 <ion-item *ngIf="isEditOne">
                   <ion-label position="stacked">Middle Name</ion-label>
-                  <ion-input [(ngModel)]="itemOneObj.middleName" placeholder="enter middle name"></ion-input>
+                  <ion-input [(ngModel)]="basicDetails.middleName" placeholder="enter middle name"></ion-input>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditOne">
-                    Middle Name:&nbsp;{{itemOneObj.middleName}}
+                    Middle Name:&nbsp;{{basicDetails.middleName}}
                 </ion-label>
               </ion-col>
               <ion-col class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
                 <ion-item  *ngIf="isEditOne">
                   <ion-label position="stacked">Last Name</ion-label>
-                  <ion-input  [(ngModel)]="itemOneObj.lastName" placeholder="enter last name"></ion-input>
+                  <ion-input  [(ngModel)]="basicDetails.lastName" placeholder="enter last name"></ion-input>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditOne">
-                    Last Name:&nbsp;{{itemOneObj.lastName}}
+                    Last Name:&nbsp;{{basicDetails.lastName}}
                 </ion-label>
               </ion-col>
               <ion-col class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
                 <ion-item *ngIf="isEditOne">
                   <ion-label position="stacked">Email</ion-label>
-                  <ion-input [(ngModel)]="itemOneObj.email" placeholder="enter email address"></ion-input>
+                  <ion-input [(ngModel)]="basicDetails.email" placeholder="enter email address"></ion-input>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditOne">
-                    Email:&nbsp;{{itemOneObj.email}}
+                    Email:&nbsp;{{basicDetails.email}}
                 </ion-label>
               </ion-col>
               <ion-col class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
                 <ion-item *ngIf="isEditOne">
                   <ion-label position="stacked">Date of Birth</ion-label>
-                  <ion-datetime [(ngModel)]="itemOneObj.dateOfBirth" placeholder="YYYY-MM-DD" display-format="YYYY-MM-DD"></ion-datetime>
+                  <ion-datetime [(ngModel)]="basicDetails.dateOfBirth" placeholder="YYYY-MM-DD" display-format="YYYY-MM-DD"></ion-datetime>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditOne">
-                    Date of Birth:&nbsp;{{itemOneObj.dateOfBirth}}
+                    Date of Birth:&nbsp;{{basicDetails.dateOfBirth}}
                 </ion-label>
               </ion-col>
               <ion-col class="margin-auto" size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
                 <ion-item *ngIf="isEditOne">
                   <ion-label position="stacked">Nationality</ion-label>
-                  <ion-select  [(ngModel)]="itemOneObj.nationality" placeholder="select nationality" interface="popover">
+                  <ion-select  [(ngModel)]="basicDetails.nationality" placeholder="select nationality" interface="popover">
                     <ion-select-option *ngFor="let country of countryDrp"  value="{{country.id}}">{{country.countryNiceName}}</ion-select-option>
                   </ion-select>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditOne">
-                    Nationality:&nbsp;{{itemOneObj.nationality}}
+                    Nationality:&nbsp;{{basicDetails.nationality}}
                 </ion-label>
               </ion-col>
               <ion-col *ngIf="isEditOne" text-right size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12">
@@ -102,7 +94,7 @@ Profile
                 <ion-item *ngIf="isEditTwo">
                   <ion-label position="stacked">Document</ion-label>
                   <ion-select [(ngModel)]="itemTwoObj.documentTypeCode" placeholder="select document" interface="popover">
-                    <ion-select-option *ngFor="let document of documentTypeDrp"  value="{{document.code}}">{{document.description}}</ion-select-option>
+                    <ion-select-option *ngFor="let document of documentTypes"  value="{{document.code}}">{{document.description}}</ion-select-option>
                   </ion-select>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditTwo">
@@ -133,62 +125,62 @@ Profile
                 <ion-item *ngIf="isEditThree">
                   <ion-label position="stacked">House No
                   </ion-label>
-                  <ion-input  [(ngModel)]="itemThreeObj.houseNumber" placeholder="enter house no"></ion-input>
+                  <ion-input  [(ngModel)]="addressDetails.houseNumber" placeholder="enter house no"></ion-input>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditThree">
-                    House No:&nbsp;{{itemThreeObj.houseNumber}}
+                    House No:&nbsp;{{addressDetails.houseNumber}}
                 </ion-label>
               </ion-col>
               <ion-col size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
                 <ion-item *ngIf="isEditThree">
                   <ion-label position="stacked">Street
                   </ion-label>
-                  <ion-input  [(ngModel)]="itemThreeObj.street" placeholder="enter street name"></ion-input>
+                  <ion-input  [(ngModel)]="addressDetails.street" placeholder="enter street name"></ion-input>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditThree">
-                    Street:&nbsp;{{itemThreeObj.street}}
+                    Street:&nbsp;{{addressDetails.street}}
                 </ion-label>
               </ion-col>
               <ion-col size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
                 <ion-item *ngIf="isEditThree">
                   <ion-label position="stacked">City
                   </ion-label>
-                  <ion-input  [(ngModel)]="itemThreeObj.city" placeholder="enter city name"></ion-input>
+                  <ion-input  [(ngModel)]="addressDetails.city" placeholder="enter city name"></ion-input>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditThree">
-                    City:&nbsp;{{itemThreeObj.city}}
+                    City:&nbsp;{{addressDetails.city}}
                 </ion-label>
               </ion-col>
               <ion-col size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
                 <ion-item *ngIf="isEditThree">
                   <ion-label position="stacked">Zip
                   </ion-label>
-                  <ion-input  [(ngModel)]="itemThreeObj.zipCode" placeholder="enter zip code"></ion-input>
+                  <ion-input  [(ngModel)]="addressDetails.zipCode" placeholder="enter zip code"></ion-input>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditThree">
-                    Zip:&nbsp;{{itemThreeObj.zipCode}}
+                    Zip:&nbsp;{{addressDetails.zipCode}}
                 </ion-label>
               </ion-col>
               <ion-col size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
                 <ion-item *ngIf="isEditThree">
                   <ion-label position="stacked">State / Region
                   </ion-label>
-                  <ion-input  [(ngModel)]="itemThreeObj.state" placeholder="enter state or region"></ion-input>
+                  <ion-input  [(ngModel)]="addressDetails.state" placeholder="enter state or region"></ion-input>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditThree">
-                    State / Region:&nbsp;{{itemThreeObj.state}}
+                    State / Region:&nbsp;{{addressDetails.state}}
                 </ion-label>
               </ion-col>
               <ion-col size="12" size-sm="9" size-md="6" size-lg="6" size-xl="6">
                 <ion-item *ngIf="isEditThree">
                   <ion-label position="stacked">Country
                   </ion-label>
-                  <ion-select  [(ngModel)]="itemThreeObj.countryCode" placeholder="select country" interface="popover">
+                  <ion-select  [(ngModel)]="addressDetails.countryCode" placeholder="select country" interface="popover">
                     <ion-select-option *ngFor="let country of countries"  value="{{country.id}}">{{country.countryName}}</ion-select-option>
                   </ion-select>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditThree">
-                    Country:&nbsp;{{itemThreeObj.countryCode}}
+                    Country:&nbsp;{{addressDetails.countryCode}}
                 </ion-label>
               </ion-col>
               <ion-col *ngIf="isEditThree" text-right size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12">
@@ -223,14 +215,14 @@ Profile
                   <ion-input readonly="{{!isEditFour}}" [(ngModel)]="homeNumber.number" placeholder="Number"></ion-input>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditFour">
-                    Home:&nbsp;{{itemOneObj.home_phone_code?itemOneObj.home_phone_code:''}}&nbsp;{{homeNumber.number}}
+                    Home:&nbsp;{{basicDetails.home_phone_code?basicDetails.home_phone_code:''}}&nbsp;{{homeNumber.number}}
                 </ion-label>
               </ion-col>
 
               <ion-col *ngIf="isEditFour" size="4" size-sm="4" size-md="3" size-lg="3" size-xl="3">
                 <ion-item *ngIf="isEditFour">
                   <ion-label position="stacked">Mobile</ion-label>
-                  <ion-select disabled="{{!isEditFour}}" [(ngModel)]="itemOneObj.mobile_code" placeholder="Code" interface="popover">
+                  <ion-select disabled="{{!isEditFour}}" [(ngModel)]="basicDetails.mobile_code" placeholder="Code" interface="popover">
                     <ion-select-option value="+91">+91</ion-select-option>
                     <ion-select-option value="+41">+41</ion-select-option>
                     <ion-select-option value="+45">+45</ion-select-option>
@@ -243,13 +235,13 @@ Profile
                   <ion-input readonly="{{!isEditFour}}" [(ngModel)]="mobileNumber.number" placeholder="Number"></ion-input>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditFour">
-                    Mobile:&nbsp;{{itemOneObj.mobile_code?itemOneObj.mobile_code:''}}&nbsp;{{mobileNumber.number}}
+                    Mobile:&nbsp;{{basicDetails.mobile_code?basicDetails.mobile_code:''}}&nbsp;{{mobileNumber.number}}
                 </ion-label>
               </ion-col>
               <ion-col *ngIf="isEditFour" size="4" size-sm="4" size-md="3" size-lg="3" size-xl="3">
                 <ion-item>
                   <ion-label position="stacked">Office</ion-label>
-                  <ion-select disabled="{{!isEditFour}}" [(ngModel)]="itemOneObj.office_phone_code" placeholder="Code" interface="popover">
+                  <ion-select disabled="{{!isEditFour}}" [(ngModel)]="basicDetails.office_phone_code" placeholder="Code" interface="popover">
                     <ion-select-option value="+91">+91</ion-select-option>
                     <ion-select-option value="+41">+41</ion-select-option>
                     <ion-select-option value="+45">+45</ion-select-option>
@@ -262,7 +254,7 @@ Profile
                   <ion-input readonly="{{!isEditFour}}" [(ngModel)]="officeNumber.number" placeholder="Number"></ion-input>
                 </ion-item>
                 <ion-label class="mar-l-16" position="stacked" *ngIf="!isEditFour">
-                    Office:&nbsp;{{itemOneObj.office_phone_code?itemOneObj.office_phone_code:''}}&nbsp;{{officeNumber.number}}
+                    Office:&nbsp;{{basicDetails.office_phone_code?basicDetails.office_phone_code:''}}&nbsp;{{officeNumber.number}}
                 </ion-label>
               </ion-col>
               <ion-col *ngIf="isEditFour" text-right size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12">

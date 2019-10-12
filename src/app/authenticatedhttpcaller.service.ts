@@ -42,8 +42,8 @@ import { Auth } from 'aws-amplify';
     protected async _update(_servicePath: string, _t: T) {
       const _httpOptions = await this._getHttpOptions();
       return this._http.put<T>(this.apiURL + _servicePath, _t, _httpOptions).subscribe(
-        (res) => console.log(res),
-        (err) => console.log(err)
+        (res) => console.log('success' + res),
+        (err) => console.log('error' + err)
       );
     }
 

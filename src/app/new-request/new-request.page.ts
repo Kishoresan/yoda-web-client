@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../authentication.service';
 
 @Component({
   selector: 'app-new-request',
@@ -8,13 +7,8 @@ import { AuthenticationService } from '../authentication.service';
 })
 export class NewRequestPage implements OnInit {
 
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor() { }
 
   ngOnInit() {
   }
-
-  getLoggedInUser() {
-    return this.authenticationService.getLoggedInUser();
-  }
-
 }

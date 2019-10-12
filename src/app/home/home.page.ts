@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ToastController } from '@ionic/angular';
-import { AuthenticationService } from '../authentication.service';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +8,7 @@ import { AuthenticationService } from '../authentication.service';
 })
 export class HomePage {
 
-  constructor(public toastController: ToastController, private authenticationService: AuthenticationService) { }
+  constructor(public toastController: ToastController) { }
 
   async presentToast(message, color) {
     const toast = await this.toastController.create({
@@ -20,14 +19,6 @@ export class HomePage {
       showCloseButton: true
     });
     toast.present();
-  }
-
-  getLoggedInUser() {
-    return this.authenticationService.getLoggedInUser();
-  }
-
-  logout() {
-    this.authenticationService.logOut();
   }
 
   isInvalid(field) {
