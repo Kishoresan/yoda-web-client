@@ -1,9 +1,18 @@
-<ion-header>
+<ion-header style="padding-top: 5px">
     <ion-toolbar>
       <ion-title>
         <img alt="logo" height="40" src="assets/image/logo.png">
       </ion-title>
+
+      <ion-label style="font-size: 20px;margin-right: 8px;" slot="end">
+        {{getUserHeader()}}
+      </ion-label>
+
+      <ion-icon style="font-size: 30px;margin-right: 8px;" slot="end" name="notifications"></ion-icon>
+      <ion-icon style="font-size: 30px;margin-right: 8px;" slot="end" name="log-out" (click)="logOut()"></ion-icon>
     </ion-toolbar>
 </ion-header>
+
+<ion-row style="height: 20px;"></ion-row>
 
 <router-outlet></router-outlet>
