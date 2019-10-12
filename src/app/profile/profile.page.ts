@@ -17,6 +17,8 @@ import { Auth } from 'aws-amplify';
 import { Router } from '@angular/router';
 import { observable } from 'rxjs';
 
+import { PhoneNumber } from '../entity/PhoneNumber';
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -149,17 +151,17 @@ export class ProfilePage implements OnInit {
             this.addressDetails.countryCode = address.countryCode;
           }
         }));
- /*
-      this.phoneNumberService.getByEmailId(this.getLoggedInUser())
-      .then(observable => observable.subscribe(
-       phoneNumber => {
-         for (let i = 0; i < phoneNumber.length; i++) {
-          if (phoneNumber[i].phoneType === 1) {
-            this.mobileNumber.id = phoneNumber[i].id;
-            this.mobileNumber.userId = phoneNumber[i].userId;
-            this.mobileNumber.phoneType = phoneNumber[i].phoneType;
-            this.mobileNumber.countryCode = phoneNumber[i].countryCode;
-            this.mobileNumber.number = phoneNumber[i].number;
+
+    this.phoneNumberService.find()
+      .then(obs => obs.subscribe(
+        phoneNumbers => {
+        /* for (let i = 0; i < phoneNumbers.length; i++) {
+          if (phoneNumbers[i].phoneType === 1) {
+            this.mobileNumber.id = phoneNumbers[i].id;
+            this.mobileNumber.userId = phoneNumbers[i].userId;
+            this.mobileNumber.phoneType = phoneNumbers[i].phoneType;
+            this.mobileNumber.countryCode = phoneNumbers[i].countryCode;
+            this.mobileNumber.number = phoneNumbers[i].number;
           }
 
           if (phoneNumber[i].phoneType === 2) {
@@ -178,8 +180,8 @@ export class ProfilePage implements OnInit {
             this.officeNumber.number = phoneNumber[i].number;
           }
 
-         }
-       })); */
+         }*/
+       }));
   }
 
   constructor(public toastController: ToastController, private fileChooser: FileChooser, private countryService: CountryService,
@@ -232,14 +234,16 @@ export class ProfilePage implements OnInit {
       this.isEditThree = false;
     }
   }
-  stepFourSubmit() {
+  updatePhoneNumbers() {
     if (false) {
       const msg = 'Fill In the Required Information.';
       this.presentToast(msg, 'danger');
       return false;
     } else {
       const msg = 'Save Success.';
-      this.phoneNumberService.saveAll(this.mobileNumber);
+      const phoneNumbers: Array<PhoneNumber> = [this.mobileNumber];
+
+      this.phoneNumberService.saveAll(phoneNumbers);
       // this.phoneNumberService.update(this.homeNumber, 2);
       // this.phoneNumberService.update(this.officeNumber, 3);
       this.presentToast(msg, 'success');

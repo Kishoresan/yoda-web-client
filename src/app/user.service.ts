@@ -52,12 +52,8 @@ export class PhoneNumberService extends AuthenticatedHttpCaller<PhoneNumber> {
 
   private _servicePath = '/phoneNumber';
 
-  public getByUserId(_userId: string): Promise<Observable<PhoneNumber>> {
-    return this._get(this._servicePath + '/userId/' + _userId);
-  }
-
-  public getByEmailId(_email: string): Promise<Observable<PhoneNumber[]>> {
-    return this._getAll(this._servicePath + '/email/' + _email);
+  public find(): Promise<Observable<PhoneNumber>> {
+    return super._get(this._servicePath);
   }
 
   public saveAll(_phoneNumbers: PhoneNumber[]) {
