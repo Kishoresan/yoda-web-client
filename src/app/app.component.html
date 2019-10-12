@@ -1,15 +1,20 @@
 <ion-header style="padding-top: 5px">
     <ion-toolbar>
+      
       <ion-title>
         <img alt="logo" height="40" src="assets/image/logo.png">
       </ion-title>
 
-      <ion-label style="font-size: 20px;margin-right: 8px;" slot="end">
+      <ion-label style="font-size: 20px;margin-right: 8px;" slot="end" [hidden]="!getIsUserLoggedIn()">
         {{getUserHeader()}}
       </ion-label>
 
-      <ion-icon style="font-size: 30px;margin-right: 8px;" slot="end" name="notifications"></ion-icon>
-      <ion-icon style="font-size: 30px;margin-right: 8px;" slot="end" name="log-out" (click)="logOut()"></ion-icon>
+      <ion-icon style="font-size: 30px;margin-right: 8px;" slot="end" name="notifications" [hidden]="!getIsUserLoggedIn()">
+      </ion-icon>
+
+      <ion-icon style="font-size: 30px;margin-right: 8px;" slot="end" name="log-out" [hidden]="!getIsUserLoggedIn()" 
+        (click)="logOut()"></ion-icon>
+
     </ion-toolbar>
 </ion-header>
 

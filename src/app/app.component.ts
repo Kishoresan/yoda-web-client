@@ -4,6 +4,7 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { UserService } from '../app/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -13,12 +14,14 @@ export class AppComponent implements OnInit {
 
   userEmail: string;
   userFirstName: string;
+  isUserLoggedIn: boolean;
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {
     this.initializeApp();
   }
@@ -36,18 +39,28 @@ export class AppComponent implements OnInit {
       bypassCache: false
     }).then(async user => {
       this.userEmail = user.attributes.email;
+      this.isUserLoggedIn = true;
     }).catch(err => console.log(err));
 
     this.userService.find()
       .then(obs => obs.subscribe(user => this.userFirstName = user.firstName));
   }
 
-  getUserHeader() {
-    if(this.userFirstName){
-      return this.userFirstName;
-    }
-    if(this.userEmail){
-      return this.userEmail;
+  logOut() {
+    Auth.signOut({ global: true })
+    .then(data => {
+      this.router.navigate(['/login']);
+    })
+    .catch(err => console.log(err));
+  }
+
+  public getIsUserLoggedIn(): boolean {
+    return this.isUserLoggedIn;
+  }
+
+  public getUserHeader(): string {
+    if(this.isUserLoggedIn){
+      return this.userFirstName ? this.userFirstName : this.userEmail;
     }
     return "";   
   }

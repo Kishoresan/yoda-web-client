@@ -307,14 +307,6 @@ export class ProfilePage implements OnInit {
     });
   }
 
-  logOut() {
-    Auth.signOut({ global: true })
-    .then(data => {
-      this.router.navigate(['/login']);
-    })
-    .catch(err => console.log(err));
-  }
-
   getLoggedInUser() {
     return this.userEmail;
   }
